@@ -1,0 +1,19 @@
+1、常见的错误类型
+	　Error 
+		EvalError
+			EvalError类型的错误会在使用eval()函数而 发生异常时被抛出。如果没有把eval()当成函数调用，就会 抛出错误，
+		RangeError 　
+			RangeError类型的错误会在数值超出相应范 围时触发
+		ReferenceError 
+			通常，在访 问不存在的变量时，就会发生这种错误　
+		SyntaxError 　
+			至于SyntaxError，当我们把语法错误的 JavaScript字符串传入eval()函数时，就会导致此 类错误。
+		TypeError
+			TypeError类型在JavaScript中会经常用到，在 变量中保存着意外的类型时，或者在访问不存在 的方法时，都会导致这种错误。错误的原因虽然 多种多样，但归根结底还是由于在执行特定于类 型的操作时，变量的类型并不符合要求所致　
+		URIError 
+			在使用encodeURI()或decodeURI()，而 URI格式不正确时，就会导致URIError错误
+			
+2、与try-catch语句相配的还有一个throw操作 符，用于随时抛出自定义错误(手动抛出错误)。抛出错误时，必 须要给throw操作符指定一个值，这个值是什么类型，没有要求
+	抛出错误后，会终止后面的代码继续执行。
+	
+

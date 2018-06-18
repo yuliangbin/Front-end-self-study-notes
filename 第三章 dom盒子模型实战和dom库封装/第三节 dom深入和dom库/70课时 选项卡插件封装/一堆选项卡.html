@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>选项卡</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+				font-famliy:"\5FAE\8F6F\96C5\9ED1",Helvetica,sans-serif;
+				font-size:14px;
+				-webkit-user-select:none;
+			}
+			.box {
+				margin:10px auto;
+				width:600px;
+			}
+			.box ul {
+				position:relative;
+				top:1px;
+				list-style:none;
+			}
+			.box ul:after {
+				content:"";
+				display:block;
+				clear:both;
+			}
+			.box ul li{
+				float:left;
+				margin-right:15px;
+				width:100px;
+				height:30px;
+				border:1px solid green;
+				line-height:30px;
+				text-align:center;
+				cursor:pointer;
+			}
+			.box ul li.select {
+				background:lightblue;
+				border-bottom-color:lightblue;
+			}
+			.box .select {
+				display:block;
+			}
+			.box div {
+				display:none;
+				width:500px;
+				height:150px;
+				background:lightblue;
+				border:1px solid green;
+				text-align:center;
+			}
+			
+		</style>
+	</head>
+	<body>	
+		<div class="box">
+			<ul>
+				<li>页卡1</li>
+				<li>页卡2</li>
+				<li>页卡3</li>
+				<li>页卡4</li>
+			</ul>
+			<div>内容1</div>
+			<div>内容2</div>
+			<div>内容3</div>
+			<div>内容4</div>
+		</div>
+		
+		<div class="box">
+			<ul>
+				<li>页卡1</li>
+				<li>页卡2</li>
+				<li>页卡3</li>
+				<li>页卡4</li>
+			</ul>
+			<div>内容1</div>
+			<div>内容2</div>
+			<div>内容3</div>
+			<div>内容4</div>
+		</div>
+		
+		<div class="box">
+			<ul>
+				<li>页卡1</li>
+				<li>页卡2</li>
+				<li>页卡3</li>
+				<li>页卡4</li>
+			</ul>
+			<div>内容1</div>
+			<div>内容2</div>
+			<div>内容3</div>
+			<div>内容4</div>
+		</div>
+		
+		<script src="tool.js"></script>
+		<script src="tab.js"></script>
+		<script>
+			var box = document.getElementsByClassName('box');
+			for (var i = 0; i < box.length; i++) {
+				tabChange(box[i]);
+			}
+		
+		
+		
+		
+		
+		
+		</script>
+	</body>
+	
+	
+
+</html>

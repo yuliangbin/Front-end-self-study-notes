@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link charset="utf-8" type="text/css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="box" id="box"></div>
+	</body>
+	<script charset="utf-8" type="text/javascript" src="jquery-3.3.1.js"></script>
+	<script charset="utf-8" type="text/javascript">
+		//AJAX
+		$.ajax({
+			url : "data.txt",
+			type : "get",
+			datatype : "json",
+			async : true,
+			cache : false,	//false为设定GET请求的时候不走缓存数据(即添加随机数)，true为走缓存数据(不加随机数)。原理就是URL末尾加随机数
+			timeout : 3000,	//设置超时时间，一般为3000
+			success : function (data) {
+				console.log(data)
+			}，
+			error : function () {},
+		})
+		
+		//JSONP
+		//JSONP都是GET和异步请求的，不存在其他的请求方式和同步请求。而且jQuery默认就会给JSONP的请求清除缓存
+		$ajax({
+			url : "http://matchweb.sports.qq.com/kbs/calendar?columnId=100000",
+			type : "get",
+			datatype : "jsonp",
+			jsonpCallback : "fn",//自定义传递给服务器的函数名，若不写，则jQuery会自动随机生成一个函数
+			jsonp : "bc",//把传递函数名的那个形参callback变为“bc”
+			success : function (data) {
+				console.log(data);
+			}
+		})
+		
+		
+	</script>
+</html>

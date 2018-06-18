@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>动画</title>
+		<style>
+		
+			* {
+				padding:0;
+				margin:0;
+				text-decoration:none;
+			}
+			.div {
+				position:absolute;
+				left:300px;
+				width:100px;
+				height:100px;
+				background:lightblue;
+			}
+			.btn {
+				position:absolute;
+				top:200px;
+				left:200px;
+			}
+			.btn input {
+				display:inline-block;
+				width:50px;
+				height:20px;
+				text-align:center;
+				line-height:20px;
+				outline:none;
+			}
+			
+		</style>
+	</head>
+	<body>	
+		<div class="div"></div>
+		<div class="btn">
+			<input type="button" value="right"id="right">
+			<input type="button" value="left" id="left">
+		</div>
+	</body>
+	<script>
+		var timer = null;
+		function move(target) {
+			//console.log(1);
+			clearTimeout(timer);
+			var curP = div.style.left;
+			//console.log(curP);
+			if (target > parseInt(curP)) {
+				if (parseInt(div.style.left) + step > width) {
+					div.style.left = width + 'px';
+					clearTimeout(timer);
+					return ;
+				}
+				div.style.left = parseInt(div.style.left) + step + "px";
+			} else if(target < parseInt(curP)) {
+				if (parseInt(div.style.left) - step < 0) {
+					div.style.left = 0;
+					clearTimeout(timer);
+					return ;
+				}
+				div.style.left = parseInt(div.style.left) - step + "px";
+			} else {
+				return ;
+			}
+			//这样写不好，因为每一次执行的时候，都需要先执行一次匿名函数(形成一个私有作用域)，在匿名函数中再执行move，但是在move中需要用到的数据值(target)在第一次执行的move方法中，这就需要把匿名函数形成的作用域作为跳板找到之前的，这样就导致了匿名函数形成的这个私有作用域不能被销毁。
+			timer = setTimeout(function () {
+				move(target);
+			},100)
+			
+		}
+		var div = document.getElementsByTagName('div')[0],left = document.getElementById('left'),right = document.getElementById('right');
+		var width = document.documentElement.clientWidth - div.offsetWidth;
+		div.style.left = div.offsetLeft + 'px';
+		var step = 10;
+		left.onclick = function () {
+			move(width);
+		}
+		right.onclick = function () {
+			move(0);
+		}
+		
+		var div = document.getElementsByTagName('div')[0],left = document.getElementById('left'),right = document.getElementById('right');
+		var width = document.documentElement.clientWidth - div.offsetWidth;
+		div.style.left = div.offsetLeft + 'px';
+		var step = 10;
+		left.onclick = function () {
+			move(width);
+		}
+		right.onclick = function () {
+			move(0);
+		}
+		
+	</script>
+	
+
+</html>

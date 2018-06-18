@@ -1,0 +1,103 @@
+1、prev:获取上一个哥哥元素节点
+	思路：首先获取当前元素的上一个哥哥节点，判断是否为元素节点，不是的话继续找，直到找到为止，如果没有哥哥元素节点，返回null
+	function prev(curEle) {
+		if (flag) {
+			return curEle.previousElementSibling;
+		}
+		var pre = curEle.previousSibling;
+		while(pre && pre.nodeType !== 1) {
+			pre = pre.previousSibling;
+		}
+		return pre;
+	}
+	
+2、next：获取下一个弟弟元素节点
+	function next(curEle) {
+		if (flag) {
+			return curEle.nextElementSibling;
+		}
+		var next = curEle.nextSibling;
+		while(next && next.nodeType !== 1) {
+			next = next.nextSibling;
+		}
+		return next;
+	}
+	
+3、prevAll:获取所有的哥哥元素节点
+	function preAll(curEle) {
+		var arr = [];
+		var pre = this.prev(curEle;);//prev(curEle)
+		while(pre) {
+			arr.unshift(pre);//将每一次加进来的元素节点放在数组的第一位
+			pre = this.prev(prev);
+		}
+		return arr;
+	}
+	
+4、nextAll:获取所有的弟弟节点
+	function nextAll(curEle) {
+		var next = this.next(curEle);
+		var arr = [];
+		while(next) {
+			arr.push(next);
+			next = this.next(next);
+		}
+		return arr;
+	}
+	
+5、sibling:获取相邻的两个元素节点
+	function sibling(curEle) {
+		var prev = this.prev(curEle);
+		var next = this.next(curEle);
+		var arr = [];
+		prev ? arr.push(prev) : null;
+		next ? arr.push(next) : null;
+		return arr;
+	}
+	
+6、siblings：获取所有的兄弟元素节点
+	function siblings(curEle) {
+		//var prevAll = this.prevAll(curEle);
+		//var nextAll = this.nextAll(curEle);
+		//prevAll.concat(nextAll);
+		return this.prevAll(curEle).concat(this.nextAll(curEle));
+	}
+	
+7、index：当前元素在同级元素中的索引是多少	
+	function index(curEle) {
+		return (this.prevAll(curEle).length);
+	}
+	
+8、firstChild：获取第一个元素子节点
+	function firstChild(curEle) {
+		var childs = this.children(curEle);
+		return childs.length > 0 ? childs[0] : null;
+	}
+
+9、lastChild：获取最后一个元素子节点
+	function lastChild(curEle) {
+		var childs = this.children(curEle);
+		return childs.length > 0 ? childs[childs.length - 1] : null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

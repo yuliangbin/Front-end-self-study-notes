@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Replace</title>
+		<style>
+			li {
+				width:200px;
+				border-bottom:1px solid pink; 
+			}
+		</style>
+	</head>
+	<body>
+		<ul id='ul'>
+			<li>99</li>
+			<li>98</li>
+			<li>97</li>
+			<li>96</li>
+			<li>95</li>
+		</ul>
+		<script>
+			//DOM映射机制:页面中的标签和JS获取到的元素对象是紧紧的绑定在一起的，页面中的HTML结构改变了，JS中不需要重新获取，集合里面的内容会自动跟着改变
+			let oUl = document.getElementById('ul');
+			let oLis = document.getElementsByTagName('li');
+			console.log(oLis.length);//5
+			let li = document.createElement('li');
+			oUl.appendChild('li');
+			console.log(oLis.length);//6,没有重新的获取，但是oLis这个集合中的长度和内容会自动跟着发生改变
+			
+			
+		</script>
+	</body>
+
+</html>

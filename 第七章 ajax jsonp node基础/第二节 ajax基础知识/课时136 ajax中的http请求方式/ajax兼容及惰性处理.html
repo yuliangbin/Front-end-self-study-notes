@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link charset="utf-8" type="text/css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="box" id="box"></div>
+		<script charset="utf-8" type="text/javascript">
+		var xhr = createXHR();
+		xhr.open("get","./1.txt",true);
+		//createXHR:创建AJAX对象，兼容所有的浏览器
+		function createXHR() {
+			var xhr = null,
+				flag = false,
+				arr = [
+					function () {
+						return new XMLHttpRequest;
+					},
+					function () {
+						return new ActiveXObject("Microsoft.XMLHTTP");
+					},
+					function () {
+						return new ActiveXObject("Msxm12.XMLHTTP");
+					},
+					function () {
+						return new ActiveXObject("Msxm13.XMLHTTP");
+					}
+				];
+			for (var i = 0; i < arr.length; i++) {
+				var curFn = arr[i];
+				try {
+					xhr = curFn();
+					//本次循环获取的方法没有出现错误：说明此方法是我想要的，我们下一次直接执行这个方法即可，，这就需要我把createXHR重写为本次循环得到的方法(完成后不需要再判断下面的，直接退出循环即可)
+					createXHR = curFn;
+					flag = true;
+					break;
+				} catch (e) {
+					//本次循环获取的方法执行时出现错误：继续执行下一次循环
+				}
+				if (!flag) {
+					throw new Error("your browser is not support ajax,please change your browser,try again!");
+				}
+				
+			}
+			return xhr;
+		}
+		
+	</script>
+	</body>
+	
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>余良彬的DOM操作</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			.bannerTip ul {
+				list-style:none;
+			}
+			.inner img {
+				display:block;
+				border:none;
+				width:1000px;
+				height:300px;
+			}
+			a {
+				color:#000;
+				text-decoration:none;
+			}
+			a:hover,
+			a:visited,
+			a:active,
+			a:target {
+				color:#000;
+				text-decoration:none;
+			}
+			.banner {
+				position:relative;
+				width:1000px;
+				height:300px;
+				margin:0 auto;
+				overflow:hidden;
+			}
+			.banner .inner {
+				position:absolute;
+				top:0;
+				left:0;
+				width:4000px;
+			}
+			.banner img {
+				float:left;
+			}
+			.banner .bannerTip {
+				position:absolute;
+				height:18px;
+				bottom:20px;
+				left:50%;
+				margin-left:-51px;
+
+			}
+			.banner ul li {
+				float:left;
+				margin-left:10px;
+				width:18px;
+				height:18px;
+				background:lightblue;
+				border-radius:50%;
+				cursor:pointer;
+				transition:background 0.5s;
+			}
+			.banner ul li.bg {
+				background:red;
+			}
+			.banner a {
+				position:absolute;
+				top:50%;
+				margin-top:-15px;
+				width:40px;
+				height:30px;
+				text-align:center;
+				line-height:30px;
+				background:rgba(0,0,0,0.5);
+				color:yellow;
+				transition: background 0.5s;
+			}
+			.banner a.bannerLeft {
+				left:0;
+			}
+			.banner a.bannerRight {
+				right:0;
+			}
+			.banner a:hover {
+				bacground:rgba(0,0,0,0);
+				color:#fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="banner">
+			<div class="inner">
+				<img src="./images/1.jpg" alt="">
+				<img src="./images/2.jpg" alt="">
+				<img src="./images/3.jpg" alt="">
+				<img src="./images/4.jpg" alt="">
+			</div>
+			<div class="bannerTip">
+				<ul>
+					<li class="bg"></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+			<a href="javascript:;" class="bannerLeft">prev</a>
+			<a href="javascript:;" class="bannerRight">next</a>
+		</div>
+	<script>
+		
+	</script>		
+			
+			
+	</body>
+</html>
+
+
+
+
+
+
+
+

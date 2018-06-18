@@ -1,0 +1,155 @@
+1、实现一个选项卡的封装：我们可以分析出，只要多个选项卡的主体结构一样，那么每一个实现的思路都是一模一样的，唯一不一样的就是最外层的盒子不一样 
+var box = document.getElementById('tabFir');//即最外层的盒子不一样
+
+//下面的主体结构全部一样
+var tabFirst = tools.firstChild(box),oList = tools.children(tabFirst);
+for (var i = 0; i < oList.length; i++) {
+	oList[i].onclick = function () {
+		tools.addClass(this,'select');
+		var siblings = tools.siblings(this);
+		for (var i = 0; i < siblings.length; i++) {
+			tools.removeClass(siblings[i],'select');
+		}
+		var index = tools.index(this),divList = tools.nextAll(this.parentNode);
+		for (var i = 0; i < divList.length; i++) {
+			i == index ? tools.addClass(divList[i],"select") : tools.removeClass(divList[i],"select");
+		}
+		
+	}
+}
+
+所以封装一个方法 
+function tabChange(container) {
+	var tabFirst = tools.firstChild(container),oList = tools.children(tabFirst);
+	for (var i = 0; i < oList.length; i++) {
+		oList[i].onclick = function () {
+			tools.addClass(this,'select');
+			var siblings = tools.siblings(this);
+			for (var i = 0; i < siblings.length; i++) {
+				tools.removeClass(siblings[i],'select');
+			}
+			var index = tools.index(this),divList = tools.nextAll(this.parentNode);
+			for (var i = 0; i < divList.length; i++) {
+				i == index ? tools.addClass(divList[i],"select") : tools.removeClass(divList[i],"select");
+			}
+			
+		}
+	}
+}
+
+2、方法的完整版
+(function () {
+	/*
+	 * tabChange:封装一个选项卡的插件，只要大致结构一致，以后实现选项卡的功能，只需要调取这个方法执行即可
+	 * container：当前要实现选项卡的这盒子
+	 * defaultIndex:默认选中项索引
+	*/
+	function tabChange(container,defaultIndex) {
+		var tabFirst = tools.firstChild(container),oList = tools.children(tabFirst);divList = tools.children(container,'div');
+		//让defaultIndex对应的选项卡选中
+		defaultIndex = defaultIndex || 0;
+		tools.addClass(oList[defaultIndex],'select');
+		tools.addClass(divList[defaultIndex],'select');
+		for (var i = 0; i < oList.length; i++) {
+			oList[i].onclick = function () {
+				tools.addClass(this,'select');
+				var siblings = tools.siblings(this);
+				for (var i = 0; i < siblings.length; i++) {
+					tools.removeClass(siblings[i],'select');
+				}
+				var index = tools.index(this);
+				for (var i = 0; i < divList.length; i++) {
+					i == index ? tools.addClass(divList[i],"select") : tools.removeClass(divList[i],"select");
+				}
+				
+			}
+		}
+	}
+	window.tabChange = tabChange;
+})()
+
+
+3、完整版的优化，利用事件委托来实现选项卡功能
+	思路：知点击每一个选项卡列表(li),由事件的冒泡传递可知，li的父级标签ul也会相应的触发点击事件。我们就可以把点击事件绑定在ul上，而不是在每一个li上都绑定一个点击事件。由mouseEvent中的事件源来判断到底是哪个标签被点击。从而让相应的li标签实现相关的功能
+	function tabChange(container,defaultIndex) {
+		var tabFirst = tools.firstChild(container),divList = tools.children(container,'div'),oList = tools.children(tabFirst);
+		//让defaultIndex对应的选项卡选中
+		defaultIndex = defaultIndex || 0;
+		tools.addClass(oList[defaultIndex],'select');
+		tools.addClass(divList[defaultIndex],'select');
+		//使用事件委托来优化我们的点击事件
+		tabFirst.onclick = function (e) {
+			e = e || window.event;
+			var target = e.target || e.curElement;
+			if (target.tagName.toLowerCase() === "li") {
+				detailFn.call(target,oList,divList);
+			}
+		}
+	}
+	//具体的功能实现
+	function detailFn(oList,divList) {
+	//只需要保证this是当前点击的li标签即可
+		var index = tools.index(this);
+		tools.addClass(this,"select");
+		for (var i = 0; i < divList.length; i++) {
+			i == index ? tools.addClass(divList[i],"select") : (tools.removeClass(divList[i],"select"),tools.removeClass(oList[i],"select"))
+		}
+	}
+	
+	
+4、选项卡插件的最优版，使用构造函数(面向对象)的方式编写
+	function TabChange(container,defaultIndex) {
+		return this.init(container,defaultIndex);
+	}
+	TabChange.prototype = {
+		constructor : TabChange,
+		
+		//让当前元素按照索引来设置默认选中的选项卡
+		defaultIndexEven : function () {
+			tools.addClass(this.oList[this.defaultIndex],'select');
+		tools.addClass(this.divList[this.defaultIndex],'select');
+		},
+		
+		//事件委托实现绑定切换
+		liveClick : function () {
+			var _this = this;
+			this.tabFirst.onclick = function (e) {
+				点击事件的这个函数的this是this.tabFirst
+				e = e || window.event;
+				var target = e.target || e.curElement;
+				if (target.tagName.toLowerCase() === "li") {
+					_this.detailFn(target);
+				}
+			}
+		},
+		
+		detailFn : function (curEle) {
+			var index = tools.index(curEle);
+			tools.addClass(curEle,"select");
+			for (var i = 0; i < this.divList.length; i++) {
+				i == index ? tools.addClass(this.divList[i],"select") : (tools.removeClass(this.divList[i],"select"),tools.removeClass(this.oList[i],"select"))
+			}
+		},
+		
+		//初始化，也是当前插件的唯一入口
+		init : function (container,defaultIndex) {
+			this.container = container || null;
+			this.defaultIndex = defaultIndex || 0;
+			this.tabFirst = tools.firstChild(this.container);
+			this.divList = tools.children(this.container,'div');
+			this.oList = tools.children(this.tabFirst);
+			this.defaultIndexEven();
+			this.liveClick();
+			return this;
+
+		},
+	}
+
+
+
+
+
+
+
+
+

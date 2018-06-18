@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Replace</title>
+	</head>
+	<body>
+		<script>
+		let num = 'yuliangbin';
+		let reg = /(\w)(?=\w+)/g;
+		console.log(reg.match(reg));
+		console.log(num.exec(str));
+		/*
+			let str = 'zhufeng2015zhufeng2016';
+			str = str.replace(/zhu(feng)/g,function () {
+				console.log(arguments);
+				return arguments[0];
+			})
+		*/
+		/*将字符串中的首字母变成大写
+		let str = 'hello world';
+		let reg = /\w+ ?/g;
+		console.log(reg.exec(str));
+		console.log(reg.exec(str));
+		str = str.replace(reg,function (){
+			console.log(arguments);
+			let str = arguments[0];
+			return str[0].toUpperCase() + str.slice(1);
+			
+		})
+		*/
+		/* 将小写数字替换成大写数字
+			var str = "20151213";
+			var arr = ['零','壹','贰','叁','四','伍','陸','奇','捌','玖']
+			var reg = /\d/g;
+			str = str.replace(reg,function () {
+				var num = arguments[0];
+				return arr[num];
+			})
+			*/
+		/* 获取一个字符串中出现次数最多的字符
+		var str = 'zzzzzhufengpeixunyangfanqihang';
+		var obj = {};
+		var reg = /[A-z]/gi;
+		str.replace(reg,function () {
+			var str = arguments[0];
+			if (obj[str]) {
+				obj[str] = obj[str] + 1;
+			} else {
+				obj[str] = 1;
+			}
+			return str;
+		})
+		//获取最多出现的次数
+		var maxNum = 0;
+		for (var key in obj) {
+			obj[key] > maxNum ? maxNum = obj[key] : null;
+		}
+		//获取所有符合出现maxNum次的字符
+		var arr = [];
+		for (var key in obj) {
+			obj[key] === maxNum ? arr.push(key) : null;
+		}
+		console.log('出现次数最多的字符是' + arr.toString() + ',总共出现' + maxNum + '次');
+		*/
+		/*模板引擎实现的初步原理
+		var str = "my name is {0} , my age is {1} , i come from {2} , i love {3} . ";
+		var arr = ["yuliangbin",18,"china","javaascript"];
+		str = str.replace(/{(\d+)}/g,function () {
+			var str = arguments[1];
+			return arr[str];
+		})
+		*/
+		/*需求
+		var str = "http://kbs.sports.qq.com/kbsweb/game.htm?mid=100000&cid=1467086&app=1.0";
+		var obj = {};
+		var reg = /([^?&=]+)=([^?=&]+)/g;
+		res = reg.exec(str);
+		while(res) {
+			obj[res[1]] = res[2];
+			res = reg.exec(str);
+		}
+		console.log(obj);
+		*/
+		/*
+		/*需求
+		
+		var str = "http://kbs.sports.qq.com/kbsweb/game.htm?mid=100000&cid=1467086&app=1.0";
+		var reg = /([^?&=]+)=([^?=&]+)/g;
+		var obj ={};
+		str.replace(reg,function () {
+			obj[arguments[1]] = arguments[2];
+			return arguments[0];
+		})
+		console.log(obj);
+		
+		*/
+		
+		
+		</script>
+	</body>
+
+</html>

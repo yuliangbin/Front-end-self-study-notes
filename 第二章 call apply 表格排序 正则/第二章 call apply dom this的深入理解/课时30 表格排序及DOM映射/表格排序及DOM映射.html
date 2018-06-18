@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Replace</title>
+		<style>
+			li {
+				width:200px;
+				border-bottom:1px solid pink; 
+			}
+		</style>
+	</head>
+	<body>
+		<ul id='ul'>
+			<li>99</li>
+			<li>98</li>
+			<li>97</li>
+			<li>96</li>
+			<li>95</li>
+		</ul>
+		<script>
+			/*
+			 * 给列表数组排序
+			 * 将类数组转换为数组
+			 * 对数组进行排序
+			 * 按照存储的最新顺序依次把li添加到页面当中
+			*/
+			let oUl = document.getElementById('ul');
+			let oLis = document.getElementsByTagName('li');
+			let oList = Array.prototype.slice.call(oLis);
+			oList.sort(function(a,b){
+				return a.innerHTML - b.innerHTML;
+			})
+			let frg = document.createDocumentFragment();
+			for (let i = 0; i < oList.length; i++){
+				frg.appendChild(oList[i]);
+			}
+			//oUl.appendChild(frg);
+			//frg = null;
+			
+		</script>
+	</body>
+
+</html>

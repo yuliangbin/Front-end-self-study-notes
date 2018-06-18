@@ -1,0 +1,143 @@
+1、传统的表单元素的类型
+	text:文本框
+	password:密码框
+	submit:提交按钮
+	reset:重置按钮
+	buttton:普通按钮
+	radio:单选按钮
+	checkbox:复选按钮
+	file:
+	hidden:
+	
+2、	<input type="radio" id="sexMan" name="sex" checked/><label for="sexMan">男</label>
+	<input type="radio" id="sexWoman" name="sex"><label for="sexWoman">女</label>
+	<input type="submit" id="submit">
+	<script type="text/javascript">
+		var submit = document.getElementById("submit"),
+			sexWoman = document.getElementById("sexWoman"),
+			sexMan = document.getElementById("sexMan");
+		submit.onclick = function () {
+			var sexType = 0;
+			sexMan.checked ? null : sexType = 1;
+			console.log(sexType);
+		}
+		
+		sexMan.onclick = sexWoman.onclick = function () {
+			console.log(this.value);
+		}//当点击单选按钮时就发生该事件
+		
+		sexMan.onchange = sexWoman.onchange = function () {
+			console.log(this.value);
+		}//当单选按钮的状态值改变的时候才发生该事件
+	</script>
+	
+		- 若需要在点击男、女文字的时候也实现单选框的选中效果，可以给input设置id，并且在label标签上添加属性for="id名"，即可实现点击选中效果
+		- 若需要实现只能选中一个的效果，可以将相应的input标签的name属性设置成相同的属性名，即可实现
+		
+3、<input type="checkbox" value="游泳" name="hobby"/><label>游泳</label>
+	<input type="checkbox" value="唱歌" name="hobby"/><label>唱歌</label>
+	<input type="checkbox" value="敲代码" name="hobby"/><label>敲代码</label>
+	<input type="checkbox" value="摄影" name="hobby"/><label>摄影</label>
+	<input type="checkbox" value="爬山" name="hobby"/><label>爬山</label>
+	<script type="text/javascript">
+		var submit = document.getElementById("submit"),
+			hobby = document.getElementsByName("hobby");//在IE浏览器中，getElementByName只对表单元素(input)有用
+		submit.onclick = function () {
+			for (var i = 0; i < hobby.length; i++) {
+				var curHobby = hobby[i];
+				if (curHobby.checked) {
+					console.log(curHobby.value);
+				}
+			}
+		}
+	</script>
+	
+4、HTML5中给INPUT新增加了一些新的属性
+	<input type="number" id="number" value="25" min="18" max="60" step="1">
+	<input type="range" id="number" value="25" min="18" max="60" step="1">
+		search:
+		url:
+		email:
+		tel:
+		number:
+			min:最小值
+			max:最大值
+			step:步长
+			value:默认值
+			disabled:不可编辑
+		range:
+			min:最小值
+			max:最大值
+			step:步长
+			value:默认值
+		color:
+		date:
+		time:
+		datatime
+		
+5、	PC端常用的事件有:click,change,focus,blur,keydown,keyup
+	移动端常用的表单事件:在移动端没有keydown,keyup事件，(当然有的手机是识别的)，因为移动端使用的是键盘是虚拟的键盘；在移动端多了一个事件类型:input事件
+		
+	HTML5新增特性的作用：
+			- 提高了更加强大的功能，方便我们的开发
+			- 在移动端使用对应的input事件，当用户输入的时候可以调取出对应的虚拟键盘(这是HTML5最核心的作用)
+			- 相对于传统的表单类型提供了新的验证方式
+				JS中提供的新的验证方式是input.checkValidity();//这里的input是一个input标签对象
+				css中提供的是input.valid / input.invalid
+			- HTML5中还新增加了一个新的属性:placeholder,用来给文本框设置默认提示的(但是在IE浏览器中兼容不是特别好)
+6、惰性思想封装一个函数去除字符串首位空格(该方法封装在string对象的原型链上)
+	(function (pro) {
+		function myTrim() {
+			return this.replace(/^ +| +$/g,"");
+		}
+		pro.myTrim = myTrim;
+	})(String.prototype);
+	
+7、HTML5中的表单邮箱验证可以使用css样式实现验证，亦可以使用js代码实现验证
+================ css验证 ====================================
+	#userEmailTwo:valid {
+		border:1px green solid;
+	}//邮箱验证成功后显示绿色
+	#userEmailTwo:invalid {
+		border:1px red solid;
+	}//邮箱验证不成功，显示红色
+
+======================= js 验证 ==============================
+	//光标移除时触发的事件
+		userEmailTwo.onblur = function () {
+			var val = this.value.replace(/^ +| +$/g,"");
+			if (!this.checkValidity()) {
+				console.log("邮箱格式不正确");
+			}
+		}
+		//若需要在每打一个字母就检查一遍，可以使用onkeyup事件
+		userEmailTwo.onkeyup = function () {
+			var val = this.value.replace(/^ +| +$/g,"");
+			var reg = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+			if (!reg.test(val)) {
+				this.style.border = "1px red solid";
+			} else {
+				this.style.border = "1px green solid";
+			}
+		}
+	
+
+
+
+HTML5还提供新的表单元素:dataList,progress
+	<input type="search" id="searchInp" list="searchList">
+	<datalist id="searchList">
+		<option>珠峰1</option>
+		<option>珠峰2</option>
+		<option>珠峰3</option>
+		<option>珠峰4</option>
+	</datalist>
+	和<select>标签的区别
+	<select>
+		<option>珠峰1</option>
+		<option>珠峰2</option>
+		<option>珠峰3</option>
+		<option>珠峰4</option>
+	</select>
+	
+	

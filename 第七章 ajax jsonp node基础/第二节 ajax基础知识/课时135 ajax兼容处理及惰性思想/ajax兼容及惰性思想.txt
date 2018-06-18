@@ -1,0 +1,39 @@
+1、为了兼容IE6及更低版本，如果第一个不支持，则浏览器会报错，后面就不再执行了。(因为在谷歌浏览器或其他不支持new ActiveXObject("Microsoft.XMLHTTP"的浏览器中会报错)
+	var xhr = null;
+	if (window.XMLHttpRequest) {
+		xhr = new XMLHttpRequest;
+	} else if (new ActiveXObject("Microsoft.XMLHTTP")){
+		xhr = new ActiveXObject("Microsoft.XMLHTTP")
+	} else if (new ActiveXObject("Msxml2.XMLHTTP")) {
+		xhr = ActiveXObject("Msxml2.XMLHTTP");
+	} else if (ActiveXObject("Msxml3.XMLHTTP")) {
+		xhr = new ActiveXObject("Msxml3.XMLHTTP")
+	}
+
+2、由于1的情况，所以使用try catch 来捕获。	
+	function createXHR() {
+		var xhr = null;
+		if (window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest;
+		} else {
+			try {
+				xhr = new ActiveXobject("Microsoft.XMLHTTP");
+			} catch (e) {
+				try {
+					xhr = new ActiveXObject("Msxml2.XMLHTTP");
+				}
+				catch (e) {
+					try {
+						xhr = new ActiveXobject("Msxml3.XMLHTTP");
+					} catch (e) {
+						
+					}
+					
+				}
+			}
+		}
+		return xhr;
+	}
+var xhr1 = createXHR();
+var xhr2 = createXHR();
+知这样每创建一个xhr对象，都会把createXHR方法执行一遍。由于我们第一次执行的时候就已经知道该浏览器下支持哪个new方法。但是第二次执行createXHR方法的时候就仍需要再全部重新执行一遍。这显然会增加系统的开销。所以我们可以用惰性思想的编程方式把支持浏览器的那个new方法返回来，这样就不需要每次执行时都把全部的代码执行一遍

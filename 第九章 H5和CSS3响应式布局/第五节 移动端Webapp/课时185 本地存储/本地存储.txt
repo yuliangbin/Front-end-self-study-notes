@@ -1,0 +1,56 @@
+1、什么是本地存储
+	我们知道在客户端运行的JS是不能操作用户电脑磁盘中的文件的(为了保护客户端运行的安全)。
+	所以本地存储实际上是存储在客户端上的。
+	JS中的本地存储:
+		在使用JS向浏览器的某一个位置存储一些内容，浏览器即使关闭了，存储的信息也不会销毁，当在重新打开浏览器的时候我们依然可以获取上次存储的信息
+		
+2、本地存储的方案
+	(1)传统
+		- cookie 把信息存储到客户端的浏览器中(但是项目服务器也是可以获取到cookie的)
+		- session 把信息存储到服务器上(服务器存储)
+	(2)HTML5:WebStorage
+		- localStorage 永久存储的客户端本地
+		- sessionStorage 信息的会话存储，会话窗口存在信息也存在，会话窗口关闭信息就消失了(在当前页刷新不会导致信息消失)
+		
+3、localStorage
+	- localStorage.setItem([key],[value]):向客户端的本地存储一条记录，存储的[value]需要是字符串格式，如果编写的不是字符串，浏览器会默认转化为字符串然后再进行存储.
+	同源下存储的[key]是不会重复的，如果之前有的话，是把存储的信息值进行修改。
+	- localStorage.getItem([key]):获取之前存储的值
+	- localStorage.removeItem([key]);移除key对应的存储记录
+	- localStorage.clear();清空所有当前源的存储记录
+	- localStorage.length;获取存储的记录条数
+	- localStorage.key(0);获取索引为0的这一项的key是什么
+		localStorage.setItem('name',JSON.stringify({"zhufeng":"珠峰"}));
+		localStorage.setItem('age',18);
+		console.log(typeof(localStorage.getItem('age')));//string
+4、sessionStorage具有和localStorate相同的方法。
+
+5、localStorage,sessionStorage的区别:
+	localStorage属于永久存储，只有手动删除才会消失。
+	sessionStorage属于临时会话存储，只要当前的页面一关闭，信息就消失了。刷新页面只是把当前页面的DOM结构进行重新的渲染，会话并没有关闭。
+	
+6、对中文字符进行编码和解码的方法，防止传递存储过程中出现乱码。
+	escape					unescape
+	encodeURI				decodeURI
+	encodeURIComponent		decodeURIComponent
+	...
+		let str = '余良彬';
+		console.log(escape(str));
+		console.log(unescape(escape(str)));
+		
+7、cookie和localStorage的区别
+	cookie兼容所有的浏览器，但是localStorage不兼容IE6-8.
+	cookie存储的内容大小是有限制的，一般同源下只能存储4KB大小的内容，localStorage存储的内容也有大小限制，一般同源下只能存储5MB
+	cookie存储的内容是有过期时间的，但是localStorage是永久存储。使用杀毒软件或浏览器自带的清除垃圾的功能可能会把存储的cookie给删除掉。
+	用户可能由于安全角度考虑禁用cookie，但是不能禁用localStorage
+	
+8、真实的项目中，本地存储使用使用哪些东西
+	cookie 
+		记住用户名密码或者自动登陆:用户的部分信息，当用户登陆成功后我们会把用户的一些信息记录到本地cookie中，这样在项目的任何页面都可以知道当前登录的用户是那个了。
+		存储少量信息或者是需要浏览器兼容的都需要使用cookie来进行存储
+	localStorage 
+		在PC端我们可以用其存储某一个JS或者CSS文件中的源代码。还可以吧一些不需要经常更新的数据存储到本地，存储的时候可以设置一个存储的时间，若之后刷新页面看一下时间 有没有超出预定的时间，如果已经超过了，我们重新获取数据，没超过我们使用本地存储
+	本地存储都是明文存储
+		对于重要的信息一般不存储到本地，如果非要存储的话，我们需要把存储的信息进行加密
+			可逆转加密:加密完成还能解密回来
+			不可逆转的加密:MD5

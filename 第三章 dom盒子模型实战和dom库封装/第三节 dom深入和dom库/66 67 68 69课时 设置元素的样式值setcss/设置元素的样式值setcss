@@ -1,0 +1,91 @@
+1、在js中给元素设置样式属性值，我们只能通过curEle.style[attr] = value ;这种方式给当前元素设置行内样式
+
+2、我们设置一个函数给当前元素的某个样式的属性值(增加在行内样式上)
+	function setCss(curEle,attr,value) {
+		if (attr === "opicaty") {
+			//如果设置的是透明度，我们需要设置两套样式来兼容所有浏览器
+			curEle[style][opacity] = value;
+			curEle[style][filter] = "alpha(opacity=" + value*100 + ")";	
+			return ;
+		}
+		if (attr === "float") {
+			//在js中设置float也需要处理兼容
+			curEle[style]["float"] = value;
+			curEle[style]["styleFloat"] = value;
+			return ;
+		}
+		//对于某些样式值，如果传递进来没有单位，我们就需要自动把单位默认的补充上，这样的话就更加人性化
+		var reg = /^(width|height|top|bottom|left|right|((marggin|padding)(Top|Left|Bottom|Right)?))$/;
+		if (reg.test(attr)) {
+			if (!isNaN(value)) {
+				value = value + "px";
+			}
+		}
+		curEle[style][attr] = value;
+	}
+	
+=========================== 课时67 批量设置元素的样式值 =============================================
+1、批量的设置元素的样式值
+	function setGroupCss(curEle,options) {
+		//检测options的数据类型
+		if (Object.prototype.toString.call(options) !== "[object Object]") {
+			return ;
+		}
+		var reg = /^(width|height|top|bottom|left|right|(margin|padding)(Top|Right|Left|Bottom)?)$/;
+		for (key in options) {
+			var value = options[key];
+			//在js中设置float也需要处理兼容
+			if (key === "float") {
+				curEle[style][float] = value;
+				curEle[style]["styleFloat"] = value;
+				continue ;
+			}
+			//如果设置的是透明度，我们需要设置两套样式来兼容所有浏览器
+			if (key === "opacity") {
+				curEle[style][opacity] = value;
+				curEle[style][filter] = "alpha(opacity=" + value * 100 + ")";
+				continue ;
+			}
+			//对于某些样式值，若传递进来没有单位，则需要把单位默认补充上。
+			if (reg.test(key)) {
+				if (!isNaN(value)) {
+					value += "px";
+				}
+			}
+			curEle[style][key] = value;
+		}
+	}
+	
+2、第二种方法
+	function setGroupCss(curEle,options) {
+		options = options || 0;
+		if (options.toString() !== "[object Objec]") {
+			return ;
+		}
+		for (key in options) {
+			if (options.hasOwnProperty(key)) {
+				this.setCss(curEle,key,options[key]);
+			}
+		}
+	}
+	
+==========================课时69 获取 单独设置 批量设置元素的样式值 ========================
+1、封装一个类似jQuery中的css的方法
+	function css(curEle,attr,value) {
+		var argTwo = arguments[1];
+		if (typeof(argTwo) === "string") {
+		//这个参数是一个字符串，这样的话有可能就是在获取样式；为什么说是有可能呢？因为还需要判断是否存在第三个参数，如果第三个参数存在，就不是获取样式，而是单独设置样式。
+			var argThree = arguments[2];
+			if (!argThree) { //第三个参数不存在
+				//return this.getCss(curEle,argTwo);
+				return this.getCss.apply(this,arguments);//为了方便，可以把整个arguments直接传递进去
+			} else {
+				return this.setCss.apply(this,arguments);
+			}
+		}
+		if (Object.prototype.toString.call(argTwo) === "[objec Object]") {
+			this.setGroupCss.apply(this,arguments);
+		}
+	}
+
+2、在使用if语句判断!的情况，如 if (!argThree) {};表示没有传递第三个参数时的操作，但是当第三个参数传递值为0时，也会执行if语句。所以在用!语句时，一定要考虑当值为0的时候是不是符合情况。所以上述语句应改为 if (typeof(argThree) === "undefined")

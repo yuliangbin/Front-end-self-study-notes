@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Replace</title>
+	</head>
+	<body>
+		<script>
+		'use strict'
+			function fn(num1,num2){
+				console.log(num1 + num2);
+				console.log(this);
+			}
+			fn.call(100,200);//this => 100,
+			fn.call(null);//this => window,严格模式下为null
+			fn.call(undefined);//this => window,严格模式下为undefined
+			fn.call();//this => window,严格模式下为undefined
+			fn();//this => window ,严格模式下:undefined
+			let obj = {
+				name:'hello',
+			}
+			fn.bind(obj,1,2);//只是改变了fn中this为obj，并且给函数传递了两个参数值1,2.与call和apply不同的是，此时并不会执行fn:执行bind函数会有一个返回值，这个返回值tempFn就是this改变后的那个结果
+			let tempFn = fn.bind(obj,1,2);//bind函数的作用只是改变this指向并返回一个改变this指向后的函数。
+			//tempFn();
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,16 @@
+1、bind():这个方法和call和apply方法类似，都是用来改变this关键字的。在IE5-8下不兼容
+
+2、bind函数的作用只是改变this指向并返回一个改变this指向后的函数。而call和apply在改变this指向的同时会执行原函数。
+
+3、改变this指向的5中常见方式
+	- 自定义函数执行，this指向的是window
+	- [DOMElement].fn();fn中的this指向的是当前DOM对象
+	- 当某一个方法fn执行，如果前面有xxx.fn()，则this指向的就是xxx.
+	- call、apply、bind等方法改变this指向
+	- 构造函数中的this.name = 'xiaoyu';其中的this指向的是对象的实例
+	
+	以上是在非严格模式下执行的情况。在严格模式下
+		- 自定义函数执行，this指向的是undefined
+		
+4、严格模式和非严格模式的this区别
+	对于代码中没有写执行主体的情况下，非严格模式默认是window执行的，所以this执行的是window。在严格模式下，没有写执行主体 ，this指向的都是undefined

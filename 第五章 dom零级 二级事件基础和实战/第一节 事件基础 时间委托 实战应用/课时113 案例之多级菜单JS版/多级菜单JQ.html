@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>深入理解事件的传播机制</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+				list-style:none;
+				text-decoration:none;
+				color:black;
+			}
+			.box {
+				margin:10px;
+				width:300px;
+				padding:10px;
+				/*渐进增强：首先设置一个纯色的背景，对于不兼容CSS3的浏览器来说使用纯色背景，对于兼容的浏览器，则使用渐变的背景*/
+				border:1px dashed #008000;
+				background:#ffe470;
+				background:-webkit-linear-gradient(top left,#2b93d2,#fa5889,#cde074,#ffe470);
+			}
+			.box li {
+				position:relative;
+				line-height:30px;
+			}
+			.box span {
+				display:block;
+				margin-left:20px;
+			}
+			.box em {
+				position:absolute;
+				top:8px;
+				display:inline-block;
+				width:14px;
+				height:14px;
+				background:white;
+				cursor:pointer;
+			}
+			.box .two {
+				margin-left:20px;
+			}
+			.box .three {
+				margin-left:40px;
+			}
+			.box .four {
+				margin-left:60px;
+			}
+			.box .two,.box .three,.box .four {
+				display:none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<ul>
+				<li>
+					<em></em><span>第一级第一个</span>
+					<ul class="two">
+						<li><span>第二级第一个</span></li>
+						<li>
+							<em></em><span>第二级第二个</span>
+							<ul class="three">
+								<li><span>第三级第一个</span></li>
+								<li><span>第三级第二个</span></li>
+								<li>
+									<em></em><span>第三级第三个</span>
+									<ul class="four">
+										<li><span>第四级第一个</span></li>
+										<li><span>第四级第二个</span></li>
+										<li><span>第四级第三个</span></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<em></em><span>第二级第三个</span>
+							<ul class="three">
+								<li><span>第三级第一个</span></li>
+								<li><span>第三级第二个</span></li>
+								<li><span>第三级第三个</span></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<em></em><span>第一级第二个</span>
+					<ul class="two">
+						<li><span>第二级第一个</span></li>
+						<li>
+							<em></em><span>第二级第二个</span>
+							<ul class="three">
+								<li><span>第三级第一个</span></li>
+								<li><span>第三级第二个</span></li>
+								<li>
+									<em></em><span>第三级第三个</span>
+									<ul class="four">
+										<li><span>第四级第一个</span></li>
+										<li><span>第四级第二个</span></li>
+										<li><span>第四级第三个</span></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<em></em><span>第二级第三个</span>
+							<ul class="three">
+								<li><span>第三级第一个</span></li>
+								<li><span>第三级第二个</span></li>
+								<li><span>第三级第三个</span></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<script>
+			
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

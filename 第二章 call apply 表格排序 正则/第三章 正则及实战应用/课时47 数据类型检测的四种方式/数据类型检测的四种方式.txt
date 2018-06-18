@@ -1,0 +1,66 @@
+1、数据类型检测的四种方式
+	- typeof 	用来检测数据类型的运算符
+	- instanceof 	检测一个实例是否属于某个类
+	- constructor 	构造函数
+	- Object.prototype.toString.call()	
+
+2、使用typeof检测数据类型，返回值是字符串格式。能够返回的数据类型是："number","string","bolean","undefined","function","object".
+	局限性：
+		(1)typeof (null); //"object"
+		(2)不能具体的细分是数组还是正则，还是对象中其他的值，因为使用typeof检测数据类型，对于对象数据类型的所有的值，最后返回的都是"object"
+
+3、instanceof 检测某一个实例是否属于某个类。
+	主要用来弥补typeof不能检测具体属于哪个对象的局限性。
+		var obj = [];
+		console.log(obj instanceof Array);//true
+	局限性：	
+		(1)不能用于检测和处理字面量方式创建出来的基本数据类型值，即原始数据类型
+		(2)instanceof的特性：只要在当前实例的原型链上的对象，我们用其检测出来都为true
+			let fn = function () {
+				console.log(1);
+			}
+			console.log(fn instanceof Function);//true
+			console.log(fn instanceof Object);//true
+		(3)在类的原型继承中，我们最后检测出来的结果未必正确
+		
+4、constructor 构造函数(是函数原型上的属性) 作用和instsnceof非常相似。
+	(1)与instanceof不同的是，可以处理原始数据类型
+		但是对于数字类型的原始类有限制
+			var num = 1;
+			num.constructor === Number;// true
+			1.constructor === Number;//报错，Invalid or unexceped token
+	(2)局限性：我们可以把类的原型进行重写，在重写的过程中很可能把之前constructor给覆盖了，这样检测出来的结果就是不准确的	
+		如 	function Fn() {};
+			fn.prototype = new Array;
+			var f = new Fn;//f是一个函数，按道理说他的构造函数应该是Function,但是修改其原型链后，它的constructor变成了Array.
+		
+5、对于特殊的数据类型null和undefined,他们的所属类是Null和Undefined,但是浏览器吧这两个类保护起来了，不允许我们外部访问使用。
+	如：null instanceof Null;显示null未定义
+
+========================= toString() 的理解 ===========================================
+1、toString的理解：咋一看应该是转换成字符串，但是某些toString方法不仅仅是转换为字符串。对于数值类型的数据还可以转换成相应进制的数。
+	但必须要知道的是返回值的类型是String类型的
+	console.log((1).toString());// -> Number.prototype.toString;转换成字符串"1"
+	console.log((1).__proto__.__proto__.toString());// -> Object.prototype.toString;结果为"[object Object]"
+	Math.toString();//"[object Math]";第一个object代表的是当前实例是对象数据类型的(第一个是固定不变的，永远是object)，第二个当前对象属于哪一个类
+=======================================================================================
+6、Object.prototype.toString.call()方法检测数据类型，是最全面也是最常用的方式。
+	(1)首先，获取Object原型上的toString方法，让方法执行，并且改变方法中的this关键字的指向
+	(2)Object.prototype.toString的作用是返回当前方法的执行主体(方法中的this)所属类的详细信息
+		console.log(Object.prototype.toString.call(1));					//[object Number]
+		console.log(Object.prototype.toString.call(/^sf/));				//[object RegExp]
+		console.log(Object.prototype.toString.call("hello"));			//[object String]
+		console.log(Object.prototype.toString.call(true));				//[object Boolean]
+		console.log(Object.prototype.toString.call(null));				//[object Null]
+		console.log(Object.prototype.toString.call(undefined));			//[object Undefined]
+		console.log(Object.prototype.toString.call(function() {}));		//[object Function]
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

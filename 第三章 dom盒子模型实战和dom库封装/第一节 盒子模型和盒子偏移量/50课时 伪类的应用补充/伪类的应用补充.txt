@@ -1,0 +1,5 @@
+1、我们知道标准浏览器获取和修改样式属性可以通过window.getComputedStyle(box,null);而IE(6-8)因为window没有getComputedStyle方法，故用element.currentStyle;
+2、window.getComputedStyle(box,null);中的第二个参数是用来存放伪类的，在PC端为了考虑兼容问题，故用null来占位。但是在移动端是没有浏览器兼容一说的。
+3、常用的伪类有 :before :after,在一个元素标签前面或后面创建一个新的虚拟标签，我们可以给这个虚拟标签增加样式，也可以增加内容
+4、不妨想这样一个问题：获取标签的样式，我们可以通过JS来获得该标签，然后通过getCpomputedStyle()来获取其中的样式。那么我们如何获取伪类呢？虽然伪类也是一个标签，但好像不能通过获取标签的方法来获取到它。更何况每一个元素都可以创建伪类。那么我们其实可以通过创建伪类的标签来获取到伪类，从而获取到它的样式。
+我们说window.getComputedStyle(box,null);的第二个参数是用来存放伪类的，即：window.getComputedStyle(box,after).content;来获取伪类里的内容。

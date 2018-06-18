@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Replace</title>
+	</head>
+	<body>
+		<div></div>
+		<div></div>
+		<div></div>
+		<script>
+			try {
+				console.log(a);
+			}catch(e) {	//形参e必须要写，不然会报错
+				console.log(e.message);
+				throw new Error('你的网络繁忙，请稍后再试.');//new Error创建Error类的一个实例
+			}finally{
+				console.log('a');
+			}
+			
+			//利用不同的错误信息类型，有助于对错误做出	恰当的处理
+			try {
+				console.log(1);
+			}catch(e) {
+				if (e instanceof TypeErroe){
+					//处理类型错误
+				}
+			}
+			window.onerror = function(msg,url,line){
+				console.log(msg);
+				return false;
+			}
+			console.log(a);
+			
+			
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

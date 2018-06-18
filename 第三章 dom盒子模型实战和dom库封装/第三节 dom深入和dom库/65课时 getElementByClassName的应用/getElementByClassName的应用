@@ -1,0 +1,29 @@
+1、封装一个函数getElementsByClassName()，通过获取样式的类名获取一组元素
+	//获得指定上下文context中含有类名为className的所有元素标签
+	function getElementsByClassName(className,context) {
+			context = context || document;
+			if (flag) {
+				var arr = this.listToArray(context.getElementsByClassName(className));
+				return arr;
+			}
+			var arr = [];
+			var classNameArr = className.replace(/(^ +| +$)/g,"").split(/ +/g);
+			//获取指定上下文中的所有元素标签，循环这些标签，获取每一个标签的className样式类名的字符串
+			var nodeList = context.getElementsByTagName("*");
+			for (var i = 0,len = nodeList.length; i < len; i++) {
+				var curEle = nodeList[i];
+				var _isOk = true;
+				//判断当前元素是否包含数组classNameArr里的所有类名
+				for (var k = 0; k < classNameArr.length; k++) {
+					var curName = classNameArr[k];
+					if (!(tools.hasClass(curEle,curName))) {
+						_isOk = false;
+						break;
+					}
+				}
+				if (_isOk) {
+					arr.push(curEle);
+				}
+			}
+			return arr;
+		}

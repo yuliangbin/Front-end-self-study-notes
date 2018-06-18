@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>响应式网站</title>
+		<link rel="stylesheet" href="">
+		<style>
+			html {
+				font-size:100px;
+			}
+			
+			.box {
+				position:absolute;
+				top:0;
+				left:0;
+				bottom:0;
+				right:0;
+				margin:auto;
+				width:200px;
+				height:200px;
+				background:green;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="main">
+			<div class="box"></div>
+		</div>
+		<script type = "text/javascript">
+			function () {
+			var desW = 640,
+				winW = document.documentElement.style.fontSize,
+				ratio = winW / desW,
+				oMain = document.getELementsByClassName("main");
+			if (winW > desW) {
+				oMian.style.width = desW + "px";
+				oMain.style.margin = "0 auto";
+				return;
+			}
+			document.documentElement.style.fontSize = ratio * 100 + "px";
+	}
+		</script>
+		
+	</body>
+
+
+
+</html>

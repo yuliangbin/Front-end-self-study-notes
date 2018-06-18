@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>补充CSS伪类</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			#outer {
+				margin:50px auto;
+				padding:50px;
+				width:180px;
+				height:180px;
+				border:10px solid #000;
+				background:orange;
+				position:relative;
+			}
+			#inner {
+				padding:50px;
+				width:80px;
+				height:80px;
+				border:10px solid #000;
+				background:green;
+				position:absolute;
+				bottom:0;
+			}
+			#center {
+				width:50px;
+				height:50px;
+				border:10px #000 solid;
+				background:red;
+				
+			}
+			
+			
+			
+		</style>
+	</head>
+	<body>	
+		<div id="outer">
+			<div id="inner">	
+				<div id="center"></div>
+			</div>
+		</div>
+		
+	</body>
+	<script>
+		var outer = document.getElementById('outer'),inner = document.getElementById('inner'),center = document.getElementById('center');
+		
+	</script>
+	
+
+</html>

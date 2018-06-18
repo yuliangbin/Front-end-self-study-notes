@@ -1,0 +1,32 @@
+1、append：向指定父级元素(指定容器)的末尾追加元素子节点
+	function append(newEle,parentNode) {
+		parentNode.appendChild(newEle);
+	}
+	
+2、preppend：向指定父级元素的开头增加元素子节点
+	//即在第一个元素子节点之前增加一个元素节点
+	function preppend(newEle,parentNode) {
+		var firstElementNode = this.firstChild(parentNode);
+		if (firstElementNode) {
+			parentNode.insertBefore(newEle,firstElementNode);
+			return ;
+		}
+		parentNode.appendChild(newEle);
+	}
+	
+3、insertBefore:把目标元素追加到源元素的前面
+	- parentNode.insertBefore(targetElement,originElement);//DOM自带方法
+	//自己封装一个方法
+	- function insertBefore(targetElement,originElement) {
+		origin.parentNode.insertBefore(targetElement,originElement);
+	}
+4、insertAfter：把目标元素追加到源元素的后面
+	function insertAfter(targetElement,originElement) {
+		var nextElementSibling = origin.nextElementSibling;//this.next(origin);
+		if (nextElementNode) {
+			this.insertBefore(targetElement,nextElementSibling);
+			return ;
+		} else {
+			origin.parentNode.appendChild(targetElemeng);
+		}
+	}

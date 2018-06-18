@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Replace</title>
+	</head>
+	<body>
+		<ul id='ul'>
+			<li></li>
+		</ul>
+		<script src="./json.js"></script>
+		<script>
+			let oUl = document.getElementById('ul');
+			let oList = document.getElementByTagName('li');
+			for (let i = 0; i < oList.length; i++){
+				oList[i].onmouseover = function(){
+					this.style.backgroundColor = 'pink';
+				};
+				oList[i].onmouseout = function(){
+					this.style.backgroundColor = '';
+				}
+				
+			}
+			//1、利用动态创建元素节点的方法把它追加到页面中的方式实现数据绑定	
+			for (let i = 0; i < arr.length; i++){
+				let cur = arr[i];
+				let oLi = document.createElement('li');
+				oLi.innerHTML = '<span>' + (i + 4) + '</span>' + cur.title;
+				oUl.appendChild('oLi');
+			}
+			//优势:以追加的方式添加内容，对原来的元素没有任何影响。
+			//但每追加一次li，都会引发一次回流，让浏览器重新渲染DOM，带来的额外的开销
+			
+			//2、字符串拼接的方法:首先循环需要绑定的数据，然后把需要动态绑定的标签以字符串的方式拼接到一起，拼接完成后，最后统一的添加到页面中。浏览器会把字符串渲染成对应的标签。
+			//字符串拼接绑定数据是工作中最常用的一种绑定数据的方式
+			let str = '';
+			for (let i = 0; i < arr.length; i++){
+				let cur = arr[i];
+				str += '<li>';
+				str += '<span>' + (i + 4) + '</span>';
+				str += cur.title;
+				str += '</li>';
+			}
+			oUl.innerHTML = str;
+			//弊端:我们把拼接的字符串添加到#ul中，原有的数据会被覆盖
+			//优势:事先把内容拼接好，只引发一次回流
+			
+			
+			//JS中DOM深入知识
+			//回流(重排 reflow):当页面中的HTML结构发生改变时(增加、删除元素，位置发生改变...)，浏览器都需要重新计算一遍最新的DOM结构，从新的当前页面进行渲染
+			//重绘:某一个元素的部分样式发生了改变，浏览器只需要重新渲染当前的元素即可
+			
+			//3、终极方法，综合了上面两者的优势:文档碎片
+			let frg = document.createDocumentFragment();//创建一个文档碎片，相当于临时创建了一个容器
+			for (let i = 0; i < arr.length; i++){
+				let cur = arr[i];
+				let oLi = document.createElement('li');
+				oLi.innerHTML = '<span>' + (i + 4) + '</span>' + cur.title;
+				frg.appendChild('oLi');
+			}
+			oUl.appendChild(frg);
+			frg = null;//完成数据绑定后，需要手动释放frg的堆内存
+			
+		</script>
+	</body>
+
+</html>

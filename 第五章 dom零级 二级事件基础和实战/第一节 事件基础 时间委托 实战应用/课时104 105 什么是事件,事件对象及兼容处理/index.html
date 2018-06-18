@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JS异步编程思想</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+				text-decoration:none;
+				font-family:微软雅黑;
+			}
+			#div1 {
+				width:100px;
+				height:100px;
+				background:red;
+			}
+		</style>
+	</head>
+	<body>	
+		<input type="text" id="input1" />
+		<div id="div1"></div>
+		<a href="http://www.baidu.com" target="_blank">百度一下</a>
+	</body>
+	<script>
+		var oDiv = document.getElementById('div1');
+		var input = document.getElementById('input1');
+		input.onkeyup = function (event) {
+			event = event || window.event ;
+			//此时event存储的是键盘事件
+			console.log(event);
+			//当前键盘上每一个键对应的值
+			//空格：32
+			//删除键(Backspace)：8
+			//删除键(delete)：46
+			//回车键：13
+			//四个方向键：左37，上38，右39，下40
+			console.log(event.keyCode);
+		}
+		//1、我们是把匿名函数定义的部分当作一个值赋给oDiv的点击行为，(函数表达式)
+		//2、重要：当点击时，不仅相应的事件执行了，浏览器默认的给这个方法传递了一个参数值 ->MouseEvent:鼠标事件对象
+			//(1)它是一个对象数据类型值，里面包含了很多的属性名和属性值，这些都是用来记录当前鼠标的相关信息的。
+			//(2)MouseEvent -> UIEvent -> Event -> Object
+		//3、关于事件对象的MouseEvent的兼容问题
+			//事件对象本身存在兼容性问题：标准浏览器是浏览器会给方法传递事件对象，我们只需要定义一个形参去接受这个对象即可。但在IE6-8中浏览器不会传递对象给方法，相关信息记录在window.event中，需要到这里去查找
+		//4、event.clientX/clientY:当前鼠标触发点距离当前屏幕左上角的距离
+		//5、event.type 存储的是当前鼠标触发的行为类型‘click’
+		oDiv.onclick = function (e) {
+			var event = e || window.event ;
+			console.dir(event);
+		}
+	</script>
+	
+
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>选项卡</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+				font-famliy:"\5FAE\8F6F\96C5\9ED1",Helvetica,sans-serif;
+				font-size:14px;
+				-webkit-user-select:none;
+			}
+			.box {
+				margin:10px auto;
+				width:600px;
+			}
+			.box ul {
+				position:relative;
+				top:1px;
+				list-style:none;
+			}
+			.box ul:after {
+				content:"";
+				display:block;
+				clear:both;
+			}
+			.box ul li{
+				float:left;
+				margin-right:15px;
+				width:100px;
+				height:30px;
+				border:1px solid green;
+				line-height:30px;
+				text-align:center;
+				cursor:pointer;
+			}
+			.box ul li.select {
+				background:lightblue;
+				border-bottom-color:lightblue;
+			}
+			.box .select {
+				display:block;
+			}
+			.box div {
+				display:none;
+				width:500px;
+				height:150px;
+				background:lightblue;
+				border:1px solid green;
+				text-align:center;
+			}
+			
+		</style>
+	</head>
+	<body>	
+		<div class="box" id="tabFir">
+			<ul id="tapOption">
+				<li class="select">页卡1</li>
+				<li>页卡2</li>
+				<li>页卡3</li>
+				<li>页卡4</li>
+			</ul>
+			<div class="select">内容1</div>
+			<div>内容2</div>
+			<div>内容3</div>
+			<div>内容4</div>
+		</div>
+		
+		<script src="tool.js"></script>
+		<script>
+		var box = document.getElementById('tabFir'),tapOption = document.getElementById('tapOption');
+		var oList = tools.children(tapOption) , oDiv = tools.children(box,'div');
+		for (var i = 0; i < oList.length; i++) {
+			oList[i].onclick = function () {
+				console.log(tools.index(this));
+				tools.addClass(this,'select');
+				var siblings = tools.siblings(this);
+				for (var i = 0; i < siblings.length; i++) {
+					tools.removeClass(siblings[i],'select');
+				}
+				var index = tools.index(this),divList = tools.nextAll(this.parentNode);
+				//console.log(index);
+				for (var i = 0; i < divList.length; i++) {
+					i == index ? tools.addClass(divList[i],"select") : tools.removeClass(divList[i],"select");
+				}
+				
+			}
+		}
+		
+		
+		
+		
+		
+		function changeTab(n) {
+			for (var i = 0; i < oList.length; i++) {
+					oList[i].className = null;
+					oDiv[i].className = null;
+				}
+				oList[n].className ="select";
+				oDiv[n].className ="select";
+		}
+		
+		/*
+		//闭包
+		for (var i = 0; i < oList.length; i++) {
+			oList[i].onclick = (function (n) {
+				return function () {
+							changeTab(n);
+						}
+			})(i)
+		}
+		//立即执行函数
+		for (var i = 0; i < oList.length; i++) {
+			(function (n) {
+				oList[n].onclick = function () {
+					changeTab(n);
+				}
+			})(i)
+			
+		}
+		
+		//私有属性
+		for (var i = 0; i < oList.length; i++) {
+			oList[i].index = i;
+			oList[i].onclick = function () {
+				changeTab(this.index);
+			}
+		}
+		*/
+			
+	</script>
+	</body>
+	
+	
+
+</html>

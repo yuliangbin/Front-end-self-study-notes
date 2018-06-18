@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>DOM</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			#box {
+				width:200px;
+				height:200px;
+				background:pink;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+		</div>
+		<script>
+			function on(ele,type,fn) {
+				if (ele.addEventListener) {
+					ele.addEventListener(type,fn,false);
+				} else {
+					if (!ele['myEvent' + type]) {
+					ele['myEvent' + type] = [];
+					ele.attachEvent('on' + type,function (e) {run.call(ele,e)});
+				}
+				var arr = ele['myEvent' + type];
+				for (var i = 0; i < arr.length; i ++) {
+					if (arr[i] == fn) {
+						return ;
+					}
+				}
+				arr.push = fn;
+				}	
+			}
+			function run(e) {
+				e = e || window.event;
+				var target = e.target || e.curElement;
+				var type = e.type;
+				var arr = this['myEvent' + type];
+				for (var i = 0; i < arr.length; i ++) {
+					if (typeof(arr[i]) === 'function') {
+						arr[i].call(this,e);
+					} else {
+						arr.splice(i,1);
+						i--;
+					}
+					
+				}
+			}
+			function off(ele,type,fn) {
+				var arr = ele['myEvent' + type];
+				if (ele.removeEventListener) {
+					ele.removeEventListener(type,fn,false);
+				} else {
+					if (arr && arr.length) {
+						for (var i = 0; i < arr.length; i ++) {
+							if (arr[i] == fn) {
+								arr[i] = null;
+								return ;
+							}
+						}
+					}
+					
+				}
+				
+			}
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

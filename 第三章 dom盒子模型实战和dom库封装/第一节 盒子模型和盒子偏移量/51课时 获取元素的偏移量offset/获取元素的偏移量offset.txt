@@ -1,0 +1,60 @@
+1、 null 和 undefined 的区别
+	两者都代表没有，但null是属性存在但是值不存在
+	undefined 是连这个属性都不存在
+	如:
+	document.parentNode ->null,浏览器自带的一个求元素父亲节点的属性,因为在一个页面中document已经是最顶级的元素，它没有父元素
+	document.parentnode -> undefined ,没有parentnode属性
+	
+2、offsetParent : 父级参照物，在同一个平面内，最外层元素是里面所有元素的父级参照物(和HTML层级结构没有必然的联系)。
+	即body标签内所有元素的：ele.offsetParent ->body;
+	但是document.body.offsetParent -> null
+	
+3、我们知道父子元素之间可以有定位关系，即通过position属性来进行定位。如果未设置定位元素，那么所有元素的父级参照物都为<body>,设置了定位元素之后，那么子级元素的父级参照物是距离其最近的设置了定位的元素(position:relative/absolute/fixed).
+
+4、既然offsetLeft /offsetTop 获取的是当前元素(外边框)距离其父级参照物(内边框)的距离。那么我们可不可以封装一个offset方法，获取页面中任意一个元素距离body的偏移(包括左偏移和上偏移)，不管当前的父级参照物是谁。
+	//获取到的结果是一个对象，{left:totalLeft , top:totalTop}
+	function (curEle) {
+		var totalLeft = null,totalTop = null,par = curEle.offsetParent;
+		totalLeft = curEle.offsetLeft;
+		totalTop = curEle.offsetTop;
+		//如果没有找到body,就把父级参照物的边框和偏移也累加
+		while(par) {
+			if (navigator.userAgent.indexOf('MSIE 8.0')===-1) {
+				//父级参照物的边框
+			totalLeft += par.clientLeft;
+			totalLeft += par.clientTop;
+			}
+			//父级参照物的偏移
+			totalLeft += par.offsetLeft;
+			totalTop += par.offsetTop;
+			par = par.offsetParent;
+		}
+		return {left:totalLeft , top:totalTop};
+	}
+//在IE8浏览器中，offsetLeft / offsetTop 是元素本身的外边框距离父级元素外边框的距离
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

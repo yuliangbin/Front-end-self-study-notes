@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>余良彬的第一个网页</title>
+        <meta name="keyword" content="it is very nice to meet you">
+        <meta name="description" content="do not worry about my furtrue">
+        <style>
+			
+        </style>
+    </head>
+    <body>
+		<div id='nav'>
+			
+		</div>
+		<script>
+		//堆内存
+		//对象数据类型或者函数数据类型定义的时候首先会开辟一个堆内存，堆内存里有一个引用的地址，如果外面有变量
+		obj = {
+			name:"xiaoyu",
+		};
+		//如果想让堆内存释放/销毁，只需要把所有引用它的变量值赋值为Null，浏览器的内存清理机制会在下次运行的时候清空内存
+		obj = null;
+		
+		//栈内存
+		//(1)全局作用域
+			//只有当页面关闭时全局作用域才会销毁
+		//(2)私有作用域(只有函数执行的时候会创建私有作用域)
+			//每次执行的时候都会创建一个新的作用域
+			//一般情况下函数执行完成后悔自动销毁其作用域。
+		
+		
+		//在一个私有作用域下给DOM元素(对象)的事件绑定一个函数，一般情况下我们的私有作用域都不销毁
+		
+		
+		
+		</script>
+	</body> 
+    
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>鼠标跟随</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			#box {
+				width:448px;
+				margin:20px auto;
+				position:relative;
+			}
+			#box:after {
+				display:block;
+				content:"";
+				clear:both;
+			}
+			.box > img {
+				display:block;
+				width:100px;
+				height:75px;
+				float:left;
+				margin-right:10px;
+				border:1px green solid;
+				
+			}
+			
+			#mark {
+				position:absolute;
+				display:none;
+				top:0;
+				left:0;
+				width:100px;
+				height:100px;
+				border:1px green solid;
+				
+			}
+				
+			#mark > img {
+				width:100%;
+				height:100%;
+				
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="box" id="box">
+			<img src="images/1.jpg">
+			<img src="images/2.jpg">
+			<img src="images/3.jpg">
+			<img src="images/4.jpg">
+			<div id="mark">
+				<img src="images/1.jpg">
+			</div>
+		</div>
+		<script type="text/javascript" src="jquery-3.3.1.js"></script>
+		<script>
+		//ommouseenter 和 onmouseleave 与 onomouseover he onmouseout 的区别：浏览器默认阻止了上述事件的冒泡传播
+			function getCss(curEle,attr) {
+				if (window.getComputedStyle) {
+					
+				}
+			}
+			var img = document.getElementById('box').getElementsByTagName('img'),
+				mark = document.getElementById('mark'),box = document.getElementById('box'),img1 = document.getElementById('mark').getElementsByTagName('img')[0];
+			var len = img.length;
+			for (var i = 0; i < len; i ++) {
+				img[i].onmouseover = function (e) {
+					e = e || window.event;
+					var target = e.target || e.curElement;
+					mark.style.left = e.clientX - box.offsetLeft + 5 + 'px';
+					mark.style.top = e.clientY -box.offsetTop + 5 + 'px';
+					img1.setAttribute('src',target.getAttribute('src'));
+					mark.style.display = 'block';
+					
+				}
+				img[i].onmousemove = function (e) {
+					mark.style.left = e.clientX - box.offsetLeft + 5 + 'px';
+					mark.style.top = e.clientY -box.offsetTop + 5 + 'px';
+				}
+				img[i].onmouseleave = function () {
+					mark.style.display = 'none';
+				}
+			}
+			
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+

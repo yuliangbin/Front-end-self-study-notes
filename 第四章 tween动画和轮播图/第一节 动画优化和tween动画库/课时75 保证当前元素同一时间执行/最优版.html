@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>动画</title>
+		<style>
+		
+			* {
+				padding:0;
+				margin:0;
+				text-decoration:none;
+			}
+			.div {
+				position:absolute;
+				left:300px;
+				width:100px;
+				height:100px;
+				background:lightblue;
+			}
+			.btn {
+				position:absolute;
+				top:200px;
+				left:200px;
+			}
+			.btn input {
+				display:inline-block;
+				width:50px;
+				height:20px;
+				text-align:center;
+				line-height:20px;
+				outline:none;
+			}
+			
+		</style>
+	</head>
+	<body>	
+		<div class="div"></div>
+		<div class="btn">
+			<input type="button" value="right"id="right">
+			<input type="button" value="left" id="left">
+		</div>
+	</body>
+	<script>
+		var timer = null;//为了保证当前元素的同一时间只运行一个动画(下一个动画运行时，上一个动画自动清除)：需要保证当前元素所有接受动画定时器返回值的变量共享(可以把这个值放在全局变量里，亦可以把这个值放在当前元素的自定义属性上(私有变量)里)
+		function move(target) {
+				
+			//知道层层闭包是由于每次执行函数时都需要传递参数导致的，因此我们可以将函数实现的逻辑代码再用一个函数_move包含起来，而这个函数不再需要形参，所以也就不用形成层层闭包(move函数每次都执行)，只要形成一个闭包就可以了(即move只执行一次)。
+			function _move() {
+				clearTimeout(div.timer);
+				var curP = div.style.left;
+				if (target > parseInt(curP)) {
+					if (parseInt(div.style.left) + step > width) {
+						div.style.left = width + 'px';
+						clearTimeout(timer);
+						return ;
+					}
+					div.style.left = parseInt(div.style.left) + step + "px";
+				} else if(target < parseInt(curP)) {
+					if (parseInt(div.style.left) - step < 0) {
+						div.style.left = 0;
+						clearTimeout(timer);
+						return ;
+					}
+					div.style.left = parseInt(div.style.left) - step + "px";
+				} else {
+					return ;
+				}
+			}
+			move();
+			div.timer = setTimeout(_move,25);
+			/*
+			//这样写不好，因为每一次执行的时候，都需要先执行一次匿名函数(形成一个私有作用域)，在匿名函数中再执行move，但是在move中需要用到的数据值(target)在第一次执行的move方法中，这就需要把匿名函数形成的作用域作为跳板找到之前的，这样就导致了匿名函数形成的这个私有作用域不能被销毁。即形成了闭包
+			timer = setTimeout(function () {
+				move(target);
+			},100)
+			*/
+		}
+		var div = document.getElementsByTagName('div')[0],left = document.getElementById('left'),right = document.getElementById('right');
+		var width = document.documentElement.clientWidth - div.offsetWidth;
+		div.style.left = div.offsetLeft + 'px';
+		var step = 10;
+		left.onclick = function () {
+			move(width);
+		}
+		right.onclick = function () {
+			move(0);
+		}
+		
+		
+	</script>
+	
+
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>响应式网站</title>
+		<link rel="stylesheet" href="swiper/css/swiper.css">
+		<style>
+			/*假设：设计稿是640 轮播图是640*300 */
+			img {
+				width:640px;
+				height:300px;
+			}
+			html {
+				font-size:100px;
+			}
+			html,body {
+				width:100%;
+				overflow:hidden;
+			}
+			.swiper-container {
+				margin:0 auto;
+				height:3 rem;
+				overflow:hidden;
+			}
+			
+			.swiper-slide {
+				height:3 rem;
+			}
+			.swiper-slide img {
+				width:100%;
+				height:100%;
+			}
+		</style>
+	</head>
+	<body>
+		<section class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide"><img src="images/1.jpg" /></div>
+				<div class="swiper-slide"><img src="images/2.jpg" /></div>
+				<div class="swiper-slide"><img src="images/3.jpg" /></div>
+				<div class="swiper-slide"><img src="images/4.jpg" /></div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</section>
+		<script src="swiper/js/swiper.js"></script>
+		<script type = "text/javascript">
+			//响应式布局
+			(function () {
+				var desW = 640,
+					winW = document.documentElement.clientWidth,
+					ratio = winW / desW;
+				document.documentElement.style.fontSize = ratio *100 + "px";
+			})();
+			//初始化是swiper实现区域的滑动
+			//new Swiper([container selector],[settings])
+			var swiper1 = new Swiper(".swiper-container",{
+				loop: true,//无缝轮播
+				pagination: {
+					el: ".swiper-pagination",
+				},
+				autoplay: {
+					delay:3000,
+					disableOnInteraction:false
+				}
+			});
+		</script>
+		
+	</body>
+
+
+
+</html>

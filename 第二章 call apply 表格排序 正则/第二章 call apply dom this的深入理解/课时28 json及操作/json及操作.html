@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Replace</title>
+	</head>
+	<body>
+		<script>
+			<!-- JSON不是一个单独的数据类型，它只是一种特殊的数据格式->它是对象数据类型的 -->
+			<!-- 在window浏览器里，提供了一个叫JSON的属性，它里面提供了两个方法: -->
+				<!-- - JSON.parse -> 把JSON格式的字符串转换为JSON格式的对象 -->
+				<!-- - JSON.stringify -> 把对象(不管是JSON格式的还是普通的对象)转换为JSON格式的字符串 -->
+			let obj = '{"name":"珠峰","age":7}';//普通格式的对象
+			let jsonObj = JSON.parse(obj);//JSON格式的对象
+			console.log(jsonObj);
+			/*
+			 * 原因在于：eval本身的问题。 由于json是以”{}”的方式来开始以及结束的，在JS中，它会被当成一个语句块来处理，所以必须强制性的将它转换成一种表达式。
+			加上圆括号的目的是迫使eval函数在处理JavaScript代码的时候强制将括号内的表达式（expression）转化为对象，而不是作为语句（statement）来执行。
+			举一个例子，例如对象字面量{}，如若不加外层的括号，那么eval会将大括号识别为JavaScript代码块的开始和结束标记，那么{}将会被认为是执行了一句空语句。所以下面两个执行结果是不同的：
+			alert(eval("{}"); // return undefined
+			alert(eval("({})");// return object[Object]
+
+			对于这种写法，在JS中，可以到处看到。
+
+			如: (function()) {}();  做闭包操作时等。
+			*/
+			
+			console.log(eval('(' + obj + ')'));
+			//Unexpected token n in JSON at position 1
+				
+			//Unexpected token o in JSON at position 1
+			<!-- 在IE6-7浏览器中，我们的window下没有JSON对象，刚才的parse和stringify都不存在了。 -->
+			let JsonObj = eval("(" + obj + ")");//将字符串转换为JSON格式的对象
+		</script>
+	</body>
+
+</html>

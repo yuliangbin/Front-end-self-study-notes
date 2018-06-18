@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>余良彬的HTML5操作</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			#div {
+				width:200px;
+				height:200px;
+			}
+			.bg {
+				background:pink;
+			}
+			.border {
+				border:1px green solid;
+			}
+			
+			
+		</style>
+	</head>
+	<body>	
+		<div class="box de f" id="div"></div>
+	</body>
+	<script>
+		var div = document.getElementById('div');
+		//div.className = 'bg';//覆盖写
+		//div.className += " bg";//追加写
+		function hasClass(curEle,className) {
+			var reg = new RegExp("(^| +)" + className + "( +|$)");
+			return reg.test(curEle.className)
+		}
+		var a = hasClass(div," de f");
+	</script>
+	
+
+</html>

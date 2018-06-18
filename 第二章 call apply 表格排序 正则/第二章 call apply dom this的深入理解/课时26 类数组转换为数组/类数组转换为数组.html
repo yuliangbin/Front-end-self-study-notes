@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Replace</title>
+	</head>
+	<body>
+		<div></div>
+		<div></div>
+		<div></div>
+		<script>
+			let oDiv = document.getElementsByTag('div');//是一个类数组
+			//将类数组转换为数组
+			//IE6-8下不支持用数组的slice实现将元素集合的类数组转换为数组
+			//只针对元素集合节节点集合，但是arguments却可以转换
+			let newODiv = Array.prototype.slice.call(oDiv);
+			
+			
+			
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,28 @@
+1、//addClass:增加当前元素(curEle)的样式类名(className,字符串形式)。可以写多个类名，类名间以空格隔开
+	function addClass(curEle,className) {
+		//为了防止className传递进来的值包含多个样式类名，我们把传递进来的字符串按照一到多个空格拆分成数组中的每一项
+		var arr = className.split(/ +/g);
+		for (var i = 0，len = arr.length; i < len; i++) {
+			if (!(this.hasClass(curEle,arr[i]))) {
+			curEle.className = " " + className;
+		}
+		}	
+	}
+	
+2、//removeClass:移除当前元素(curEle)的样式类名(className,字符串形式)。可以写多个类名，类名间以空格隔开
+	functioon removeClass(curEle,className) {
+		var arr = className.split(/ +/g);
+		for (var i = 0,len = arr.length; i < len; i++) {//循环数组，一项项移除即可
+			var curName = arr[i];
+			if (this.hasClass(cueEle,curName)) {
+				var reg = new RegExp("(^| +)" + curName + "$| +","g");
+				curEle.className = curEle.className.replace(reg," ");
+			}
+		}
+	}
+	
+3、//hasClass:判断当前元素(curEle)的是否存在样式类名(className,字符串形式)。
+	function hasClass(curEle,className) {
+		var reg = new RegExp("(^| +)" + className + "( +|$)");
+		return reg.test(curEle.className)
+	}

@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>鼠标跟随</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			html {
+				height:500px;
+			}
+			.box > img {
+				float:left;
+				display:block;
+				width:100px;
+				height:75px;
+				border:1px green solid;
+				margin-right:10px;
+				
+			}
+			.box {
+				position:relative;
+				width:448px;
+				margin:20px auto;
+			}
+			.box:after {
+				display:block;
+				content:"";
+				clear:both;
+			}
+			#mark {
+				position:absolute;
+				display:none;
+				top:0;
+				left:0;
+				margin:0;
+				width:400px;
+				height:300px;
+				border:1px solid blue;
+			}
+			#mark img {
+				display:block;
+				width:100%;
+				height:100%;
+				border:none;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box" id="box">
+			<img src="images/1.jpg" />
+			<img src="images/2.jpg" />
+			<img src="images/3.jpg" />
+			<img src="images/4.jpg" />
+			<div class="box" id="mark">
+				<img src="images/1.jpg">
+			</div>
+		</div>
+		<script type="text/javascript" src="jquery-3.3.1.js"></script>
+		<script>
+			var html = document.getElementsByTagName('html')[0];
+			var $box = $('#box'),$mark = $('#mark');
+			//等价于$(document).ready(),等页面上的HTML结构都加载完成时在执行对应的函数
+			$(function () {
+				var $box = $('#box'),$mark = $('#mark');
+				var $boxOffSet = $box.offset();//获取当前元素距离body的偏移
+				$box.children('img').bind('mouseover',function(event) {
+					var event = event || window.event;
+					event.target = event.target || event.srcElement;
+					var left = event.clientX - $boxOffSet.left + 10;
+					var top = event.clientY -$boxOffSet.top + 10;
+					$mark.stop().show(500).css({left:left,top:top}).find('img').attr('src',event.target.getAttribute('src')) ;
+				}).bind('mousemove',function(event) {
+					var event = event || window.event;
+					event.target = event.target || event.srcElement;
+					var left = event.clientX - $boxOffSet.left + 10 +'px';
+					var top = event.clientY -$boxOffSet.top + 10 + 'px';
+					$mark.css({left:left,top:top});
+				}).bind('mouseout',function () {
+					$mark.stop().hide(500);
+					//JQ动画中一定要在前面设置一个stop()来终止上一次动画，然后再开始下次动画，因为如果不终止，当动画切换过快的时候，容易出现延迟(级播放完上一次动画，再播放这一次的动画)
+				})
+				//$box.children('img').on('mouseover')
+				//$box.children('img').mouseover(function () {})
+			})
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+

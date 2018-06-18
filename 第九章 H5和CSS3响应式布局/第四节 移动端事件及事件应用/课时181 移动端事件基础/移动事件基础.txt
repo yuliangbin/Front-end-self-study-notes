@@ -1,0 +1,7 @@
+1、PC端
+	click,mouseover,mouseout , mouseenter , mouseleave , mousemove , mousedown , mouseuo , mousewheel , keydown , kwyup , blur , load , scroll , focus , change ...
+	
+2、移动端
+	click(单击) , load , scroll , focus , blur , change , input(代替keyup，keydown).....
+	TOUCH事件模型(处理单手指操作模型):touchstrat , touchmove , touchend , touchcancle
+	GESTURE事件模型(处理多手指事件模型):gesturestart , gesturechange , gestureend

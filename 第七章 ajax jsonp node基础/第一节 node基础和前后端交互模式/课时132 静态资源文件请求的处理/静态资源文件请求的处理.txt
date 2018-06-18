@@ -1,0 +1,22 @@
+1、	sync 同步
+	fs.readFilesync(‘文件路径’,"编码格式utf-8");//同步获取文件
+	fs.readFile(‘文件路径’,"编码格式utf-8");//异步获取文件
+	async 异步
+2、MIME类型
+	- 	每一种资源文件都有自己的标识类型，
+		例如：
+			html文件的MIME类型是"text/html".
+			css文件的MIME类型是"text/css".
+			txt文件的MIME类型是"text/plain".
+	- 浏览器会按照代码的MIME类型进行渲染
+
+3、静态资源文件
+	HTML|JS|CSS|JSON|TXT|ICO|JPG|GIF|PNG|BMP等
+	
+4、如果客户端亲请求的资源文件不存在，我们不加try catch 的话服务器会终止，这样不好，所以我们加try catch 捕获异常信息，这样即使资源访问的资源不存在，服务器也不会报错，同样也不会终止
+		try {
+			var con = fs.readFilesync("." + pathname,"utf-8");
+			res.end(con);
+		} catch (e) {
+			res.end("requested file is not find");
+		}

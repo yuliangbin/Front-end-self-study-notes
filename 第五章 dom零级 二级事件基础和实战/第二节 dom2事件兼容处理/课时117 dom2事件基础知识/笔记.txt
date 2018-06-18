@@ -1,0 +1,71 @@
+1、可以知道的是DOM 0级事件是元素内的一个私有属性，div.onclick = function () {};对一个私有属性赋值(在该事件上绑定一个方法)。由此可知DOM 0级事件只能给元素的某一个行为绑定一次方法，第二次绑定会把前面的覆盖掉
+
+2、DOM 2级事件绑定，其实是让box通过原型链一直找到EventTarget这个内置类原型上的affEventListener方法来实现的
+
+3、DOM 2可以给某一个元素的同一个行为绑定多个不同的方法
+	实例 1
+	obj.addEventListener(事件类型 , 处理函数 , false)
+	//IE9以下不兼容，可以为一个事件绑定多个处理程序，并且按照绑定时的顺序去执行
+	实例1
+		div.addEventListener('click' , function f() {} , false); //1
+		div.addEventListener('click' , function f() {} , false); //2
+		//事件1和事件2虽然执行的函数一样，但是函数f()的地址不一样，所以是2个处理函数，执行2次
+	实例2
+		function f() {};
+		div.addEventListener('click' , f , false); //1
+		div.addEventListener('click' , f , false); //2
+		//事件1和事件2执行的函数都是f(),但因为地址一样，所以只执行一次。即某一个元素的同一个行为只能绑定一次相同的方法
+		
+3、DOM 0 中的行为事件，我们DOM 2一样可以绑定，而DOM 2还提供了DOM 0中没有的行为类型 -> DOMContentLoaded:当页面中的DOM结构(HTML结构)加载完成触发的行为。	
+
+4、window.onload = function () {};当页面中的所有资源全部加载完成(图片、html结构】音视频...)才会被执行，并且在页面中只能用一次，后面再写会覆盖掉前面。
+
+5、jQuery:$(document).ready(function () {}) ->$(function () {}),只要在页面中的HTML结构加载完成就会执行对应的函数，并且在同一个页面可以出现多次.
+实现原理：我们知道，JQ是用原生JS来实现的，所以JQ中实现方式为：
+	//DOM 2级事件绑定
+	//并且绑定的行为是DOM2中新增的DOMContentLoaded
+		
+6、事件的移除
+	(1)DOM 0级事件的移除
+		div.onclick = null;
+	(2)DOM 2级事件的移除
+		function fn() {};
+		div.addEventLiatener('click',fn,false);
+		div.removeEventLiatener('click',fn,false);
+		
+7、事件池：是用来存储当前元素行为绑定的方法的，按绑定的顺序依次存入，执行时也依次执行(浏览器自带的机制)
+	类型		方法	阶段
+	click		fn1		冒泡/捕获
+	mouseover	fn1		冒泡/捕获	
+	.....
+	由此不难解释，某一个元素的同一个事件只能绑定一个相同的方法(类型，方法，阶段都相同)，当把事件存入事件池的时候，若该方法已经存在，则不予存入
+	
+8、在IE6-8浏览器中，不支持addEventListener/removeEventLiatener,如果想实现DOM 2事件绑定，只能用attachEvent(),移除用detachEvent()
+	(1)	obj.attachEvent('on'+type , func);只能在冒泡阶段发生
+			-I一个事件同样可以绑定多个处理函数
+			//与obj.addEventListener('type' , func , false)不一样的是，即使函数的地址是一样的，绑定多少次就执行多少次。即同一个函数可以绑定多次
+	(2)与标准浏览器的事件池机制对比
+		1、顺序问题：执行的时候顺序是混乱的，标准浏览器是按照绑定顺序依次执行
+		2、重复问题：可以给同一个元素的同一个行为绑定多个相同的方法
+		3、this问题：IE6-8中当方法执行的时候，方法中的this不是当前元素，而指的是window
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

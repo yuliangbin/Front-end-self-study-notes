@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>余良彬的HTML5操作</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			img {
+				display:block;
+				border:none;
+			}
+			.banner {
+				width:350px;
+				height:200px;
+				margin:15px auto;
+				border:1px green solid;
+				background:url("images/4.jpg") no-repeat center center #elelel;
+				//给当前区域加一个默认的占位图，告诉用户此处图片正在加载
+			}
+			.banner img {
+				width:100%;
+				height:100%;
+				display:none;
+			}
+		</style>
+	</head>
+	<body>	
+		<div class="banner">
+			<!--trueImg是当前图片的自定义属性，存储的是真实图片的地址-->
+			<img src="" trueImg="images/3.jpg"/>
+		</div>
+		<script>
+			var banner = document.getElementsByClassName('banner')[0],imgFir = banner.getElementsByTagName('img')[0];
+			window.setTimeout(function () {
+				//imgFir.src = imgFir.getAttribute('trueImg');
+				//imgFir.style.display = 'block';
+				//这么做是部不完美的，如果我们获取的 真实图片地址是错误的，当赋值给IMG的src属性时，不仅控制台会报错，而且页面中会出现碎图/叉子图，影响视觉效果
+				//所以我们在获取图片地址后，要先验证地址的有效性，是有效的才赋值，不是有效的不进行赋值
+				//var oImg = document.createElement('img');
+				var oImg = new Image;//创建一个新的img标签，验证图片是否能够正常加载
+				oImg.src = imgFir.getAttribute(trueImg);
+				oImg.onload = function () { //当图片能正常加载时
+					//imgFir.src = imgFir.getAttribute('trueImg');
+					imgFir.src = this.src;
+					imgTir.style.display = 'block';
+					oImg = null;//释放内存
+				}
+			},500)
+		</script>
+	</body>
+	
+	
+
+</html>

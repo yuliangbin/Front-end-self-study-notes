@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>余良彬的HTML5操作</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			
+			
+		</style>
+	</head>
+	<body>	
+		<div class="w1 w2 w3"></div>
+		<div class="w2 w3"></div>
+		<div class="w1 w2"></div>
+		<div class="w1 w3"></div>
+		<div class="w3"></div>
+	</body>
+	<script src="tool.js"></script>
+	<script>
+		var w1 = document.getElementsByClassName("  w1   w3")
+		//必须同时包含w1&&w3才能被选中，但是和样式的顺序以及中间有多少个空格是没有关系的
+		/*
+		function getElementsByClassName(className,context) {
+			context = context || document;
+			var arr = [];
+			var classNameArr = className.replace(/(^ +| +$)/g,"").split(/ +/g);
+			
+			//console.log(classNameArr);
+			//获取指定上下文中的所有元素标签，循环这些标签，获取每一个标签的className样式类名的字符串
+			var nodeList = context.getElementsByTagName("*");
+			
+			for (var i = 0,len = nodeList.length; i < len; i++) {
+				var curEle = nodeList[i];
+				var _isOk = true;
+				//判断当前元素是否包含数组classNameArr里的所有类名
+				for (var k = 0; k < classNameArr.length; k++) {
+					var curName = classNameArr[k];
+					if (!(tools.hasClass(curEle,curName))) {
+						_isOk = false;
+					}
+					//var reg = new RegExp("(^| +)" + curName + "( +|$)");
+					//if (!(reg.test(curEle.className))) {
+					//	_isOk = false;
+					//}
+				}
+				if (_isOk) {
+					arr[arr.length] = (curEle);
+				}
+			}
+			return arr;
+		}
+		*/
+		var w = tools.getElementsByClassName("  w1   ");
+	</script>
+	
+
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>深入理解事件的传播机制</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			#box {
+				position:relative;
+				top:20px;
+				left:20px;
+				width:350px;
+				height:350px;
+				box-shadow:3px 3px 10px 0 black;
+				display:inline-block;
+			}
+			#box > img {
+				width:350px;
+				height:350px;
+			}
+			#mark {
+				position:absolute;
+				top:0;
+				left:0;
+				display:none;
+				width:175px;
+				height:175px;
+				background:black;
+				opacity:0.5;
+				filter:alpha(opacity=50);
+				cursor:move;
+			}
+			#box1 {
+				position:relative;
+				left:40px;
+				top:20px;
+				width:350px;
+				height:350px;
+				overflow:hidden;
+				display:inline-block;
+				display:none;
+			}
+			#box1 > img {
+				position:absolute;
+				top:0;
+				left:0;
+				width:200%;
+				height:200%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<img src="3.jpg">
+			<div id="mark"></div>
+		</div>
+		<div id = 'box1'>
+			<img src="3.jpg">
+		</div>
+		<script>
+			var box = document.getElementById('box'),mark = document.getElementById('mark'),img = document.getElementById('box1').getElementsByTagName('img')[0],box1 = document.getElementById('box1');
+			box.onmouseenter = function (event) {
+				mark.style.display = 'block';
+				box1.style.display = 'inline-block';
+				
+			}
+			box.onmousemove = function () {
+				event = event || window.event;
+				var maxL = box.offsetWidth - mark.offsetWidth,minL = 0;
+				var maxT = box.offsetHeight - mark.offsetHeight,minT = 0;
+				var left = event.clientX - box.offsetLeft - (mark.offsetWidth)/2;
+				var top = event.clientY - box.offsetTop - (mark.offsetHeight)/2;
+				if (top < minT) {
+					mark.style.top = minT;
+					img.style.top = -2 * minT + 'px';
+				} else if (top > maxT) {
+					mark.style.top = maxT + 'px';
+					img.style.top = -2 * maxT + 'px';
+				} else {
+					mark.style.top = top + 'px';
+					img.style.top = -2 * top + 'px';
+				}
+				if (left < minL) {
+					mark.style.left = minL;
+					img.style.left = -2 * minL +'px';
+				} else if (left > maxL) {
+					mark.style.left = maxL + 'px';
+					img.style.left = -2 * maxL +'px';
+				} else {
+					mark.style.left = left + 'px';
+					img.style.left = -2 * left +'px';
+				}
+				
+				
+				
+				
+			}
+			box.onmouseleave = function () {
+				mark.style.display = 'none';
+				box1.style.display = 'none';
+			}
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

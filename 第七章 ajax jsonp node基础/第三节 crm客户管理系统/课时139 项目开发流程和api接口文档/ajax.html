@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link charset="utf-8" type="text/css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="box" id="box"></div>
+	</body>
+	<script charset="utf-8" type="text/javascript">
+		var xhr = new XMLHttpRequest;
+		
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 2) {
+				//获取服务器时间，在返回回来的头部信息中，含有当前的服务器时间
+				console.log(xhr.getResponseHeader('Date'));
+				console.log(new Date(xhr.getResponseHeader('Date')));
+			}
+		}
+		xhr.open("post","/index.txt",true);
+		xhr.timeout = 1000;//设置ajax的请求超时时间
+		xhr.setRequestHeader("zhufeng",2016);//设置自定义请求头必须在open方法之后设置
+		xhr.send("name=xiaoyu&age=7");//只有在执行这个语句后，ajax向服务器发送请求的任务才开始
+	</script>
+</html>

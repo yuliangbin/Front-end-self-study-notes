@@ -1,0 +1,299 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<title>余良彬的HTML5操作</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			ul li {
+				list-style:none;
+			}
+			img {
+				height:100%;
+				width:100%;
+				display:block;
+				border:none;
+				display:none;
+				opacity:0;
+			}
+			.news {
+				padding:10px;
+			}
+			.news li {
+				position:relative;
+				padding:10px 0;
+				height:60px;
+				border-bottom:solid #ccc 1px;
+			}
+			.news li > div:nth-child(1) {
+				position:absolute;
+				top:10px;
+				left:0;
+				width:75px;
+				height:60px;
+			}
+			.news li > div:last-child {
+				margin-left:80px;
+				height:60px;
+			}
+			.news li > div:last-child h3 {
+				height:20px;
+				line-height:20px;
+				/*实现文字超过一行自动裁切，需下面3个样式*/
+				overflow:hidden;/*超出部分隐藏*/
+				text-overflow:ellipsis;/*超出部分以...代表*/
+				white-space:nowrap;/*不换行*/
+			}
+			.news li > div:last-child p {
+				line-height:20px;
+				color:#616161;
+				overflow:hidden;
+				display:-webkit-box;
+				-webkit-line-clamp:2;
+				-webkit-box-orient:vertical;
+			}
+			
+		</style>
+	</head>
+	<body>	
+		<ul class="news">
+			<li>
+				<div>
+					<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3615858713,2554923625&fm=27&gp=0.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="./images/3.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="./images/4.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="./images/1.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="./images/2.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="./images/3.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/4.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/1.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/2.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/3.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/4.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/1.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/3.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/4.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/1.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/2.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/3.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/4.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/1.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/2.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+			<li>
+				<div>
+					<img src="images/3.jpg">
+				</div>
+				<div>
+					<h3>互联网是世界上最令人着迷的</h3>
+					<p>中国互联网是21世纪实现弯道超车的虽好的一个时代机遇，如果不抓住.</p>
+				</div>
+			</li>
+		</ul>
+		<script src="./tool.js"></script>
+		<script>
+			var img = document.getElementsByTagName('img'),len = img.length;
+
+			setTimeout(function () {
+				handleImg();
+			},500)
+			
+			window.onscroll = handleImg;
+			
+			function handleImg() {
+				for (var i = 0,len = img.length; i < len; i++) {
+					var curEle = img[i];
+					if (curEle.loaded) {
+						continue;
+					}
+					var par = curEle.parentNode;
+					var A = tools.offset(par).top;
+					var B = tools.win("clientHeight") + tools.win("scrollTop");
+					if (A < B) {
+						curEle.style.display = 'block';
+						fadeIn(curEle);	
+						curEle.loaded = true;
+					}
+				}
+				
+			}
+			
+			function fadeIn(curEle) {
+				var duration = 1000,interval = 100,target = 1;
+				var step = target / duration * interval;
+				var timer = window.setInterval(function () {
+					var curOpa = tools.css(curEle,'opacity');
+					if (curOpa > 1) {
+						curEle.style.opacity = 1;
+						clearInterval(timer);
+					}
+					curEle.style.opacity = curOpa + step;
+				},interval)
+			}
+		</script>
+	</body>
+	
+	
+
+</html>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>余良彬的第一个网页</title>
+        <meta name="keyword" content="it is very nice to meet you">
+        <meta name="description" content="do not worry about my furtrue">
+        <style>
+			
+        </style>
+    </head>
+    <body>
+		<div id='nav'>
+			
+		</div>
+		<script>
+		//如何查找函数的当前作用域的上一级作用域
+		//看当前函数是在哪个作用域下面定义的，那么它的上级作用域就是谁。和函数在哪执行的没有关系
+			var num = 10;
+			function fn(){
+				var num = 120;
+				return function(){
+					console.log(num);
+				}
+			}
+			var f = fn();
+			(function(){
+				var num = 1200;
+				f();
+			})();
+		</script>
+	</body> 
+    
+</html>

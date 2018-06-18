@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JS异步编程思想</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+				text-decoration:none;
+				font-family:微软雅黑;
+			
+		</style>
+	</head>
+	<body>	
+		<a href="javascript:;" id="goLink">GO</a>
+		
+	</body>
+	<script>
+		window.setTimeout(function () {
+			console.log("ddffd")
+		},20);
+		for (var i = 0 ;i < 100000 ; i++) {
+			if (i ==90000) {
+				console.log(i);
+			}
+		}
+		window.setTimeout(function () {
+			console.log("a")
+		},20);
+		
+	</script>
+	
+
+</html>

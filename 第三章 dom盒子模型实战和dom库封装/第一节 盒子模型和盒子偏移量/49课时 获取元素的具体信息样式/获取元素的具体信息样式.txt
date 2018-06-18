@@ -1,0 +1,106 @@
+1、在元素的私有属性里获取的有关盒模型的值都是组合的样式，即不能单一的获取元素内容的样式。
+	1、element.style.attr 
+		可以获取我们设置的元素的样式值(如宽高等)，但是有一个局限性，需要我们把元素的样式都设置在行内样式上才可以，写在样式表中不管用。
+		因此在真实项目中，这种方式不常用。我们不能为了获取值而把所有样式都写在行内样式上(无法实现CSS和HTML的分离)
+	2、使用window.getComputedStyle这个方法可以获取所有经过浏览器计算过的样式。
+		window.getComputedStyle(当前要操作的元素对象,当前元素的的伪类[一般不用伪类时此处写null或不写]).
+		执行方法window.getComputedStyle(box,null);获取的结果为CSSStyleDeclaration这个类的一个实例：包含了当前元素(box)的所有样式属性和值。获取某一特定样式
+		var style = window.getComputedStyle();
+		style.width;
+		//该方法在IE6，7，8下不兼容，因为window没有getComputedStyle这个属性，返回undefined .
+		//在IE6,7,8下使用IE独有的属性：element.currentStyle可以获取所有经过浏览器计算过的样式，获取某一特定样式：box.currentStyle.width即可。
+	3、获取对应元素的css样式的兼容写法
+		//getCss：获取当前元素所有经过浏览器计算的样式值的[attr]对应的值
+		//curEle:[Object],当前要操作的元素对象
+		//attr：[string],我们要获取的样式名称
+		(1)判断当前属性是否存在
+			function getCss(curEle,attr) {
+				var val = null;
+				if (window.getComputedStyle) {//if ('getComputed' in window)
+					val = window.getComputedStyle(cueEle,null)[attr];
+				} else {
+					val = curEle.currentStyle[attr];
+				}
+				return val;
+			}
+		(2)使用try catch 来处理兼容
+		//前提：必须保证try中的代码在不兼容的浏览器中执行的时候报错，这样的话我们才可以catch捕获到异常信息，进行处理。
+		//不管当前是什么浏览器，都需要先把try中的代码执行一遍，报错，再执行catch里的代码(消耗性能)。如果try里面有100行代码，则更明显
+			function getCss() {
+				var val = null;
+				try {
+					val = window.getComputedStyle(curEle,null)[attr];
+				} catch (e) {
+					val = curEle.currentStyle[sttr];
+				}
+			}
+		(3)通过检测浏览器版本和类型来处理兼容
+			//获取浏览器的版本信息：window.navigator
+			function getCss() {
+				var val = null;
+				if (! /MSIE (6|7|8)/.test(navigator.userAgent)) {
+					val = window.getComputedStyle(cueEle,null)[attr];
+				} else {
+					val = curEle.currentStyle[attr];
+				}
+				return val;
+			}
+2、扩展题：写一个方法，可以检测当前是什么浏览器，也可以获取到当前浏览器的版本号		
+	
+3、写CSS的时候第一步初始化默认样式，避免浏览器之间的差异，不仅如此，而且默认样式对于JS以后获取到的结果统一也是有一定帮助的。
+
+4、console.log(getCss(box,'border'));//不同浏览器获取结果不一样
+	标准浏览器和IE浏览器对于部分样式属性获取的结果还是存在不一样的，主要是由于getComputedStyle和currentStyle里对Css属性的定义不一样(比如有些前者定义了，后者没定义或以另一种方式定义)
+
+5、第一次升级：把获取到的样式值的单位去掉，以便后续操作。
+	//只有符合"数字+单位/数字"才可以使用parseFloat。因为有些是复合属性(border:1px red solid)和颜色、字体等
+	function getCss() {
+				var val = null , reg = null;
+				if (window.getComputedStyle) {//if ('getComputed' in window)
+					val = window.getComputedStyle(cueEle,null)[attr];
+				} else {
+					val = curEle.currentStyle[attr];
+				}
+				reg = /^(-?\d+(\.\d+)?)(px|pt|rem|em)?$/;
+				return reg.test(val) ? parseFloat(val) : val;
+			}
+
+6、第二次升级：有些样式属性在不同的浏览器中是不兼容的。例如：opacity(IE6,7,8不兼容)	
+	opacity:0.1;//透明度，在IE6-8中不兼容
+	filter:alpha(opacity=10);//不兼容使用滤镜来处理
+	function getCss() {
+				var val = null;
+				if (window.getComputedStyle) {//if ('getComputed' in window)
+					val = window.getComputedStyle(cueEle,null)[attr];
+				} else {
+					if(!attr==='opacity') {
+						val = curEle.currentStyle['filter'];
+						reg = /^alpha\(opacity=(\d+(?:\.\d+)?)\)$/i;
+						val = reg.test(val) ? reg.exec(val)[1]/100 :1;
+						//"alpha(opacity=10)"把获取到的结果进行剖析，获取里面的数字，让数字除以100才和标准浏览器保持一致
+					} else {
+						val = curEle.currentStyle[attr];
+					}
+					
+				}
+				return val;
+			}	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

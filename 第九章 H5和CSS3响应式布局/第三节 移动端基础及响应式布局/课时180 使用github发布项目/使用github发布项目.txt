@@ -1,0 +1,44 @@
+Github:
+	Github 在全世界都是比较权威的，我们前端开发工程师所需要的框架、类库、插件的源代码基本上都在Github上有托管
+	
+	建议：初期回去后先把自己所了解的框架、类库、插件的源代码在Github上找到，然后FORK到自己的仓库一份，以后有时间尽量去研究一下源代码，后期当自己有一定能力的时候，写一些插件或类库，上传到Github上供别人研究，培养自己的粉丝
+	
+2、Github 还有一个作用：可以在这个平台上发布前端项目文件，Github本身就是一个资源文件托管的平台，我们可以把资源文件上传到这个平台，平台帮我们发布，以后只需要输入对应的网址就可以把这个平台中托管文件的源代码返回到客户端进行渲染
+
+3、使用github
+	Github中的一个账号可以创建多个仓库，每个仓库一般只存储和管理一个项目，READ.ME文件是对 仓库的说明，里面的内容采用MARK语法编写
+	
+	通过 $ git clone xxx.git 把远程仓库中的文件下载到本地，此时本地的这个文件夹就和我们的远程仓库保持了连接，我们可以通过连接吧把本地的文件推送到远程仓库上，也可以从远程仓库上下载最新的文件等
+	
+4、使用Github发布项目，创建自己的静态博客
+	1、创建一个新的仓库(新仓库默认只有一个主分支master，如果我们要托管的是源代码的话，都是把源代码上传到master这个分支下-> $ git push origin master)
+	
+	2、基于当前创建的仓库发布我们的博客
+		Settings -> Options -> Github pages -> Launch Automatic page generator(按钮) -> Continue to Layouts -> Publish Page(在这一步我们可以选用任意的模板，当然也可以不用，我们后期可以上传自己的项目上去展示)
+		
+	RESULT: 
+		提示一句话:your project page has been created at http://zhouxiaotian.github.io/myblog/.
+					read more at http://help.github.com/pages.
+		http://zhouxiaotian.github.io/myblog/ 就是我们生成的博客访问地址
+		http://用户名.github.io/仓库名/	(以后我们可以通过github.com/用户名/仓库名/ 看到别人博客的源代码)
+		
+		github在访问页面的时候，如果不指定具体的访问的xxx.html，默认会找index.html。所以我们生产生成的地址可以不用编写myblog/index.html,但注意，只有index.html才可以忽略，其他的问价名都需要加上
+		
+		Github默认为当前的仓库创建了一个gh-pages这个分支，github默认生成的项目的源代码都在gh-pages 这个分之下(也就是想管理发布项目的文件或内容都需要在gh-pages这个分支下进行管理)
+	
+	3、为了方便后期的管理，我们把仓库的默认分支切换为gh-pages
+		Settigns -> Branches  -> Default branch
+		
+	4、把自己开发的项目上传到仓库的默认分支下(默认的主分支为master,如果修改了就填修改后的分支)，替换默认生成的文件
+		例如:
+			-> $git clone http://github.com/zhouxiaotian/myblog.git 把远程仓库里的项目文件克隆岛本地
+			-> 把除了.git问价以外的其他文件(没有用的话)都删除掉
+			-> 把自己需要展示上传的问价copy到项目问价中
+			-> $ git add .
+			-> $ git commit -m'备注信息'
+			-> $git push -u origin [填写默认分支,gh-pages master]
+		这样以后就可以把地址告诉给别人访问了
+		
+	5、锦上添花:把地址生成一个二维码，让别人扫码访问
+		草料：http://cli.im/
+		

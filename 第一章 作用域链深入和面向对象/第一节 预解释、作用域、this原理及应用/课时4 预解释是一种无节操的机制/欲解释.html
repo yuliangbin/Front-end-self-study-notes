@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>余良彬的第一个网页</title>
+        <meta name="keyword" content="it is very nice to meet you">
+        <meta name="description" content="do not worry about my furtrue">
+        <style>
+			
+        </style>
+    </head>
+    <body>
+		<div id='nav'>
+			
+		</div>
+		<script>
+		//in 操作符:判断某一个属性/方法是否属于某个对象
+		//在JS预解释的时候，for语句和if语句里的代码如果有变量声明也会存在变量提升
+		//预解释:var num;->window.num.
+		
+		/*
+			if(!('num1' in window)){//'num' in window 为true
+				var num = 12;//预编译的时候，变量提升。所以在代码逻辑的开头有变量声明: var num
+			}
+			console.log(num);
+		*/
+		/*
+			if(('num' in window)){
+				for(var i = 0;i<4;i++){
+					console.log('a');
+				}
+			}
+			console.log(i);//undefined
+		*/
+		</script>
+	</body> 
+    
+</html>

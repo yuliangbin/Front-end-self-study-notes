@@ -1,0 +1,91 @@
+1、DOM(文档对象模型):提供了JS操作页面当中元素和节点的属性和方法
+
+2、获取页面中元素的方法
+	document.getElementById()
+	document.getElelmentsByTagname()
+	document.getElelmentsByClassName();//在IE6-8下不兼容 
+	document.getElelmentsByName();//在IE中只对表单元素的name起作用
+	document.body；//获取body标签
+	document.docuemntElement;//获取整个html文档
+	
+3、接下来写的兼容方法，和JQ中的作用和方法一模一样
+	function children .//获取某一个容器中所有的元素子节点
+	//首先获取所有的子节点(childNodes),在所有的子节点中把元素节点过滤出来(nodeType == 1)
+	 function children(curEle,target) {
+		var arr = [];
+		//IE6-8不能使用内置的children属性，自己写代码实现
+		if (/MISE (6|7|8)/i.test(navigator.userAgent)) {
+			var nodeList = curEle.childNodes;
+			var len = nodeList.length;
+			for (var i = 0; i < len; i ++) {
+				if (nodeList[i].nodeType === 1) {
+					arr[arr.length] = nodeList[i];
+				}
+			}
+		} else {
+			//标准浏览器中，我们直接使用children即可，但是这样获取到的是一个元素集合(类数组)，为了与IE上的数组保持一致，实现把类数组转换成数组
+			arr = Array.prototype.slice.call(curEle.children)
+		}
+		//二次筛选
+		if (typeof(target) === 'string') {
+			for (var i = 0; k < arr.length; k ++) {
+				var curEleNode = arr[k];
+				if (curEleNode.nodeName.toLowerCase() !== target.nodeName.toLowerCase()) {
+					//不是我想要的标签
+					arr.splice(k,1);
+					k--;//后面元素向前移，所以索引减1
+				}
+			}
+		}
+		return arr;
+	 }
+	 
+	getElementByClass .//通过元素的样式类名获取一组元素(兼容所有的浏览器)，jQ 中没有这个方法，但JQ中的一部分选择器是通过这个方法的原理来实现的
+	
+	获取上一个哥哥元素节点(prev),获取下一个弟弟元素节点(next),获取所有的哥哥元素节点(prevAll),获取所有的弟弟元素节点(nextAll) .获取两个相邻的元素节点(sibling),获取所有的兄弟元素节点(siblings). 
+	
+	获取第一个元素子节点(firstChild),获取最后一个元素子节点(lastChild).
+	
+	index ;获取当前元素的索引
+	
+	prepend 和 appendChild 对应，增加某一个元素到容器的开头
+	
+	insertAfter 和 insertBefore对应，增加到某一个元素的后面
+	
+	addClass 增加样式类名
+	
+	removeClass 删除样式类名
+	
+	hasClass 判断是否存在一个样式类名
+	
+	getCss 、 setCss 、 setGroupCss
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

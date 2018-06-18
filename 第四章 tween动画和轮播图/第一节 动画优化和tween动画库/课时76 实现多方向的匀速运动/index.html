@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>动画</title>
+		<style>
+		
+			* {
+				padding:0;
+				margin:0;
+				text-decoration:none;
+			}
+			.div {
+				position:absolute;
+				left:0;
+				top:0;
+				width:100px;
+				height:100px;
+				background:lightblue;
+			}
+			.btn {
+				position:absolute;
+				top:200px;
+				left:200px;
+			}
+			.btn input {
+				display:inline-block;
+				width:50px;
+				height:20px;
+				text-align:center;
+				line-height:20px;
+				outline:none;
+			}
+			
+		</style>
+	</head>
+	<body>	
+		<div class="div"></div>
+		<script src="tween.js"></script>
+		<script src="tool.js"></script>
+		<script>
+			var div = document.getElementsByTagName('div')[0],beginLeft = tools.css(div,"left"),beginTop = tools.css(div,"top");
+			var targetLeft = 1000,targetTop = 500;
+			var changeLeft = targetLeft - beginLeft,changeTop = targetTop - beginTop;
+			var time = 0,duration = 500;
+			div.timer = setInterval(function () {
+				time += 10;
+				if (time >= duration) {
+					tools.css(div,{
+						left : targetLeft,
+						top : targetTop
+					});
+					clearInterval(div.timer);
+					return ;
+				}
+				var curLeft = tween.Linear(beginLeft,changeLeft,time,duration);
+				
+				var curTop = tween.Linear(beginTop,changeTop,time,duration);
+				div.style.left = curLeft + 'px';
+				div.style.top = curTop + "px";
+				
+			},100)
+			
+		
+		</script>
+	</body>
+
+</html>

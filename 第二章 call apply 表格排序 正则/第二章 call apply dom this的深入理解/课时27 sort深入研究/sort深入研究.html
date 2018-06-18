@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Replace</title>
+	</head>
+	<body>
+		<div></div>
+		<div></div>
+		<div></div>
+		<script>
+			let arr = [12,2,3,42,,5,63,7,8];
+			//sort()函数是利用ascii码来进行排序的
+			arr.sort(function(a,b){
+				return a-b;
+			})
+			
+			//回调函数:把一个方法A当作参数值传递给另外一个函数B中，然后再B执行的过程中，我们随时根据需求让A方法执行
+			function fn(callback){
+				callback();
+			}
+			
+			let obj = [
+				{name:'国军和',age:15,},
+				{name:'将推出',age:8,},
+				{name:'望明月',age:20,},
+				{name:'程序',age:18,},
+			]；;
+			//按age进行排序
+			
+			//按名字进行排序
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>练习</title>
+		<style>
+			html , body {
+				width: 100%;
+				height: 100%;
+			}
+			#box {
+				width: 200px;
+				height: 200px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-top: -100px;
+				margin-left: -100px;
+				background: orange;
+				cursor: move;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script>
+			let box = document.getElementById('box');
+			box.onmousedown = function(e) {
+				document.onmousemove = move;
+				document.onmouseup = up;
+			}
+			function move(e) {
+				let offsetLeft = box.offsetLeft,
+					offsetTop = box.offsetTop;
+				let offsetL = e.clientX - offsetLeft;
+				let offsetT = e.clientY - offsetTop;
+				let minL = 100, maxL = document.documentElement.clientWidth - box.clientWidth + 100;
+				let nowLeft = offsetL + offsetLeft,nowTop = offsetT + offsetTop;
+				if (nowLeft > maxL) {
+					nowLeft = maxL;
+				} else if (nowLeft < minL){
+					nowLeft = minL;
+				};
+				box.style.left = nowLeft + 'px';
+				box.style.top = offsetT + offsetTop + 'px';
+				console.log(nowLeft);
+			}
+			function up() {
+				document.onmousemove = null;
+				document.onmouseup = null;
+			}
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+1、replace方法是string对象的一个方法
+	str.replce('oldstr','newstr');//将str里的子字符串oldstr用newstr代替。
+	在不使用正则的情况下，每执行一次replace只能替换一次字符串
+	(2)在使用正则的情况下
+		str = str.replace(/zhufeng/g,'zhufengpeixun');
+	在不使用全局匹配g的情况下，每执行一次匹配一次，使用全局匹配时，一次全部替换。
+	(3)若第二个参数替换成一个函数
+		str = str.replace('zhufeng',function () {
+			console.log(arguments);
+			return 'zhufengpeixun';
+		})
+		- 匿名函数执行多少次取决于正则在字符串中捕获多少次
+		- 每执行一次匿名函数，里面传递的参数值arguments和我们通过exec()获取到的结果是非常类似的(即使正则有分组，我们也可以通过arguments获得分组捕获的内容)
+		- arguments里的参数中:索引为0的项和索引为length-1,length-2的项分别表示为大正则捕获的内容、开始捕获的索引、捕获的原始字符串。索引在1-length-3之间的为分组捕获的内容
+		- return ：你返回的是啥，就把这次大正则匹配的内容替换成你返回的内容.如果不写return，返回的值就是undefined .
+		- 如果不想replace，只想捕获，我们return arguments[0];
+		- 获取每一个分组中的内容：arguments[i] 或 RegExp.$i 或 $i,后2个在IE下不兼容
+		
+========================更多replace案例====================================
+1、将小写的数字替换成大写的数字
+
+2、获取一个字符串中出现次数最多的字符。
+
+3、模板引擎实现的初步原理
+
+4、思考题
+	(1)"2015-9-22 13:10:02" -> "2015年9月22日13时10分02秒"
+	(2)把一个字符串的所有单词的首字母大写 "zhu feng pei xun" -> "Zhu Feng Pei Xun"
+	
+5、需求：queryURLParameter
+var str = "http://kbs.sports.qq.com/kbsweb/game.htm?mid=100000&cid=1467086&app=1.0";
+把URL中的参数都获取到，并且保存成如下格式
+var obj = {
+	mid:"100000",
+	cid:"1467086",
+	app:"1.0",
+}

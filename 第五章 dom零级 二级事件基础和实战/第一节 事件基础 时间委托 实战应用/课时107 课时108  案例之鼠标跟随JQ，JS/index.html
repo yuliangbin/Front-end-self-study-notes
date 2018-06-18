@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>深入理解事件的传播机制</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			#con {
+				width:300px;
+				margin:20px auto;
+			}
+			#box {
+				position:relative;
+				width:100px;
+				height:30px;
+				background:#008000;
+			}
+			#mark {
+				position:absolute;
+				left:0;
+				top:30px;
+				width:300px;
+				height:100px;
+				background:#08bece;
+				display:none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="con">
+			<div id="box">
+				<div id="mark"></div>
+			</div>
+			
+		</div>
+		<script>
+			var box = document.getElementById('box');
+			var mark = document.getElementById('mark');
+			box.onmouseover = function () {
+				mark.style.display = 'block';
+			}
+			box.onmouseout = function () {
+				mark.style.display = 'none';
+			}
+			//利用了事件冒泡机制
+			//思考onmouseenter 和onmouseleave的区别，以及使用哪个更好
+		</script>
+	</body>
+</html>

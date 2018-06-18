@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>余良彬的HTML5操作</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			#box {
+				width: 200px;
+				height: 200px;
+				border: green solid 5px;
+				padding: 20px;
+				margin: 20px;
+				background:pink;
+			}
+			
+		</style>
+	</head>
+	<body>	
+		<div id="box"></div>
+	</body>
+	<script>
+		function fn() {
+			console.log('a');
+		}
+		var box = document.getElementById('box');
+		bind(box,'click',fn);
+		bind(box,'mouseover',fn);
+		unbind(box,'mouseover',fn);
+
+		//bind 给当前元素的某一个行为绑定方法
+		function bind(curEle,eventType,eventFn) {
+			if ('addEventListener' in document) {
+				curEle.addEventListener(eventType,eventFn,false);
+				return ;
+			}
+			var tempFn = function () {
+				eventFn.call(curEle);
+			}
+			tempFn.photo = eventFn;
+			if (!curEle['myBind']) {
+				curEle['myBind'] = [];
+			}
+			curEle['myBind'].push = tempFn;
+			curEle.attachEvent('on' + eventType,tempFn);
+		}
+			//div.attachEvent('onclick',fn1.call(div));绑定的时候就把方法fn1给执行了，把其返回值undefined给我们的onclick行为
+			//div.attachEvent('onclick',fn1.call(div));在Function类的原型链上除了call和apply可以改变this指向，bind方法也可以改变this指向，与前两者不同的是，使用bind方法只是改变this指向，而不执行fn1方法。但是bind方法在IE上不兼容，所以不考虑
+
+		//unbind 给当前元素的某一个行为移除某一个方法
+		function unbind(curEle,eventType,eventFn) {
+			if (document.removeEventListener) {
+				curEle.removeEventListener(eventType,eventFn,false);
+			}
+			var arr = curEle['myBind'];
+			if (arr  && arr instanceof Array) {
+				for (var i = 0; i < arr.length; i ++) {
+				if (arr[i].photo == eventFn) {
+					arr.splice(i,1);
+					curEle.detachEvent('on' + eventType,arr[i]);
+					break ;//return;
+					}
+				}
+			}
+		}
+
+		//考虑一下，若先不执行bind()就直接执行unbind(),会出现什么情况。很显然，若直接执行unbind(),代码var arr = curEle['myBind'];结果为arr = undefined;因为'myBind'属性是在bind()方法中定义的，若没有定义值就为undefined,而for循环中执行arr.length就会报错。
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+	
+
+</html>

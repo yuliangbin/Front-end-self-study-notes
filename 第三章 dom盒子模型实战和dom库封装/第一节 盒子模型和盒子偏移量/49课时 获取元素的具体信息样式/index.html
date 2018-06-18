@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>余良彬的HTML5操作</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			#box {
+				width: 200px;
+				height: 200px;
+				border: green solid 5px;
+				padding: 20px;
+				margin: 20px;
+				background:pink;
+			}
+			
+		</style>
+	</head>
+	<body>	
+		都是vcsdv
+		<div id="box" class="div" style="width:200px;" >要得到你就必须要付出，要付出你还需要学会坚持。如果你觉得很难，那你就放弃。<p>ccdc</p>但是一旦放弃就不要抱怨，我觉得人生就是这样，世界真的很平衡，每个人都是通过自己的努力去决定自己生活的样子。</div>
+	</body>
+	<script>
+		var div = document.getElementById('box');
+		var body = document.getElementsByTagName('body')[0];
+		//console.dir(div);
+		//console.dir(body);
+		var style = window.getComputedStyle(div,null);//返回一个函数，知getComputedStyle是一个方法。
+	</script>
+	
+
+</html>

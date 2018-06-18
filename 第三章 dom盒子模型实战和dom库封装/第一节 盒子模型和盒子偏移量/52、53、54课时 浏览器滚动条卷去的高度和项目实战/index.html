@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>补充CSS伪类</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+				text-decoration:none;
+				font-family:微软雅黑;
+			}
+			html {
+				width:100%;
+				height:500%;
+				//background:red;
+				//border:green solid 2px;
+				background:-webkit-linear-gradient(top,green,pink,orange,yellow,red);
+			}
+			a {
+				position:fixed;
+				bottom:30px;
+				right:30px;
+				width:50px;
+				height:50px;
+				background:red;
+				opacity:0.1;
+				border-radius:50%;
+				text-align:center;
+				line-height:50px;
+			}
+			a:hover {
+				opacity:0.8;
+			}
+			
+			
+		</style>
+	</head>
+	<body>	
+		<a href="javascript:;" id="goLink">GO</a>
+		
+	</body>
+	<script>
+		var goLink = document.getElementById('goLink');
+		window.onscroll = computedDisplay;
+		//判断GO按钮的显示或隐藏
+		function computedDisplay() { 
+			var curTop = document.documentElement.scrollTop;
+			var curHeight = document.documentElement.clientHeight;
+			goLink.style.display = curTop > curHeight ? 'block':'none';
+		}
+		//点击GO按钮返回顶部
+		goLink.onclick = function () {
+			this.style.display = none;
+			window.onscroll = null;//取消该事件
+			var duration = 500,interval = 10;
+			var target = document.documentElement.scrollTop;
+			var step = (target / duration) * interval;
+			var timer = window.setInterval(function() {
+				document.documentElement.scrollTop -= step;
+				var curTop = document.documentElement.scrollTop
+				if (curTop == 0) {
+					window.clearInterval(timer);
+					window.onscroll = computedDisplay;//重新设置该事件
+				}
+			},interval);
+			
+		}
+		/*
+		var timer = window.setInterval(function() {
+			var curTop = document.documentElement.scrollTop
+			curTop -= step;
+			if (curTop == 0) {
+				window.clearInterval(timer);
+			}
+		},interval);
+		为什么用curTop -= step;不能起到改变 document.documentElement.scrollTop的值，因为curTop = document.documentElement.scrollTop；只是赋值操作，而要改变 document.documentElement.scrollTop的值，则必须对该属性进行操作。
+		*/
+	</script>
+	
+
+</html>

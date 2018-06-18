@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>DOM</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+			}
+			#box {
+				width:200px;
+				height:200px;
+				background:pink;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+		</div>
+		<script>
+			/*var tempFn = {};
+			function bind(curEle,eventType,eventFn){
+				if ("addEventListener" in document) {
+					curEle.addEventListener(eventType,eventFn,false);
+					return ;
+				}
+				tempFn[eventFn] = function () {
+					eventFn.call('curEle');
+				};
+				curEle.attachEvent("on" + eventType,tempFn);
+			}
+ 
+			function unbind(curEle,eventType,eventFn) {
+				if ("removeEventListener" in document) {
+					curEle.removeEventListener(eventType,eventFn,false);
+					return ;
+				}
+				curEle.detachEvent("on" + eventType,tempFn[eventFn]);
+			}		
+			function fn1() {
+				console.log('a');
+			}
+			function fn1() {
+				console.log('b');
+			}
+			var box = document.getElementById('box');
+			bind(box,'click',fn1);
+			//bind(box,'click',fn1);
+			//unbind(box,'click',fn2);*/
+			function fn(a) {
+				console.log(a);
+			}
+			var test = fn;
+			var box = document.getElementById('box');
+			box.addEventListener('click' , test , false);
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

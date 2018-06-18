@@ -1,0 +1,57 @@
+1、Ajax: async javascript and xml 异步的JS和XML
+	XML:可扩展的标记语言(在XML文件中使用的标签是可以自己扩展的)
+	AJAX 是一种用于创建快速动态网页的技术。
+	通过在后台与服务器进行少量数据交换，AJAX 可以使网页实现异步更新。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。
+	传统的网页（不使用 AJAX）如果需要更新内容，必需重载整个网页面。
+	
+2、客户端的JS中的方法：用来向服务器端发送请求(还可以传递给服务器端数据)，然后把服务器端返回的内容获取到(Ajax一般是运行在客户端的浏览器中的)
+
+3、AJAX四步法
+	//创建一个AJAX对象(下面的这种写法在IE6及更低的版本中不支持，IE5,6使用ActiveXObject对象)
+	var xhr = new XMLHttpRequest;
+		 
+	
+	//发送前的基本信息配置：
+		//第一个参数：配置请求方式(GET、POST、PUT、DELETE、HEAD、.....)
+		//第二个参数：打开一个URL地址(配置向哪一个服务器地址发送请求)
+		//第三个参数：同步还是异步，true为异步，false为同步
+		//[username]:向服务器提供请求的用户名
+		//[userpass]:向服务器提供请求的用户密码
+		//[username][userpass]这两个值一般都不写，只有服务器做了相应的安全限制，只允许特定用户访问的话，我们才传递过去
+	xhr.open("get","/data.txt",false,[username],[userpass]);
+	
+	//给onreadystatechange这个事件绑定一个方法，监听状态的改变。只要状态一改变，就执行这个方法
+	xhr.onreadystatechange = function () {
+		//xhr.readyState：AJAX的请求状态码，可以代表当前AJAX处理的进度。有5个值。
+			//0 UNSET	当前的请求还没有发送
+			//1	OPENED	open方法已经被调用(发送前的参数配置已经完成)
+			//2	HEADERS_RECEIVED	响应头信息已经接受
+			//3	LOADING	主要返回的内容正在服务器端进行处理(正在解析响应内容)
+			//4	DONE	响应主体的内容已经成功返回到客户端(解析完成)
+		
+		//xhr.status：HTTP状态码，描述了服务器响应内容的状态
+			200 OK ^\d{2} (200或2开头的数字) 都代表响应主体的内容已经成功返回了
+			
+			301 永久重定向/永久转移
+			302 临时重定向/临时转移
+			304 本次获取的内容是读取缓存中的数据
+			
+			400 客户端传递给服务器的参数出现错误
+			401 无权限访问
+			404 客户端访问的地址不存在
+			
+			500 未知的服务器错误
+			503 服务器已经超出负荷
+			
+		//返回的内容
+			- responseText:返回以文本形式存放的内容
+			- responseXML:返回XML形式的内容
+		if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
+			var val = xhr.responseText;
+			
+		}
+	};
+	
+	//发送请求：参数写的是请求主体传递给服务器的内容
+	xhr.send();
+	

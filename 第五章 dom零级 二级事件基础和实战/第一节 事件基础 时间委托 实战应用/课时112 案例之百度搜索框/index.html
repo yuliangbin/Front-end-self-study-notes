@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>深入理解事件的传播机制</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+				list-style:none;
+				text-decoration:none;
+				color:black;
+			}
+			html,body {
+				width:100%;
+				height:100%;
+				border-top:1px solid transparent;
+			}
+			#box {
+				margin:20px auto;
+				width:500px;
+				
+			}
+			input {
+				display:block;
+				width:200px;
+				height:20px;
+				border:1px green solid;
+				padding:0 10px;
+				outline:none;//取消输入框默认的彩色边框
+				
+			}
+			#box ul {
+				position:relative;
+				top:-1px;
+				width:300px;
+				display:none;
+				border:1px green solid;
+			}
+			ul li,ul li a {
+				height:30px;
+				line-height:30px;
+				display:block;
+			}
+			ul li a {
+				padding:0 10px;
+				
+			}
+			ul li a:hover {
+				background:#ccc;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<input type="text" id="searchInp">
+			<ul id="searchList">
+				<li><a href="javascript:;">珠峰培训-前端培训</a></li>
+				<li><a href="javascript:;">珠峰NODAE培训</a></li>
+				<li><a href="javascript:;">珠峰有很多</a></li>
+				<li><a href="javascript:;">是大家都第三代</a></li>
+			</ul>
+		</div>
+		<script>
+			//显示
+				//1、文本框获取焦点，并且文本框中有内容的时候
+				//2、在文本框中操作内容(新输入/删除)，如果内容没有清空，我们就显示，否则就隐藏
+			//隐藏
+				//1、点击页面中其余位置(除了文本框和searchInp)都隐藏。
+				//2、点击searchInp中的列表隐藏，但是还要把列表中的内容放到文本框中
+			var searchInp = document.getElementById('searchInp'),searchList = document.getElementById('searchList');
+			searchInp.onfocus = searchInp.onkeyup = function (e) {
+				var val = this.value.replace(/(^ +| +$)/g,"");//获取文本框中的内容，并且除去它的收尾空格
+				searchList.style.display = val.length > 0 ? 'block':'none';
+			};
+			document.body.onclick = function (e) {
+				e = e || window.event;
+				target = e.target || e.curElement;
+				if (target.tagName.toLowerCase() == "a" && target.parentNode.parentNode.id === 'searchList') {
+					searchInp.value = target.innerHTML;
+					searchList.style.display = 'none';
+					return ;
+				}
+				if (target.tagName.toLowerCase() === 'input') {
+					return ;
+				} else {
+					searchList.style.display = 'none';
+				}
+			}
+			//我们可以阻止一个容器里某些特殊性元素，让其不在委托的范围内。我们只需要把这些不需要委托的事件阻止冒泡传播即可
+			searchInp.onclick = function (e) {
+				e = e || window.event;
+				e.stopPropagation ? e,stopPropagation() : e.cancleBubble = true
+			}
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

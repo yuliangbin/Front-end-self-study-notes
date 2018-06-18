@@ -1,0 +1,203 @@
+/*
+ *	bind: 处理DOM2级事件绑定的兼容性问题
+ *	@parameter:
+ *	curEle: 要绑定事件的元素
+ *	eventType: 要绑定的事件类型('click','mouseover'...)
+ *	eventFn: 要绑定的方法
+ */
+ 
+ ========================dom2兼容处理this问题=============================
+ var tempFn = {};
+ function bind(curEle,eventType,eventFn){
+	if ("addEventListener" in document) {
+		curEle.addEventListener(eventType,eventFn,false);
+		return ;
+	}
+	var tempFn[eventFn] = function () {
+		eventFn.call('curEle');
+	};
+	curEle.attachEvent("on" + eventType,tempFn);
+ }
+ 
+ function unbind(curEle,eventType,eventFn) {
+	if ("removeEventListener" in document) {
+		curEle.removeEventListener(eventType,eventFn,false);
+		return ;
+	}
+	curEle.detachEvent("on" + eventType,tempFn[eventFn]);
+ }
+ 
+ 1、知若想改变IE下事件执行函数的this的指向，可以在函数执行的时候改变this，即用函数eventFn.call('curEle')，这样虽然解决了this指向的问题，但又抛出了一个新的问题：即不知道该如何移除该事件函数，因为绑定的是一个匿名函数，而匿名函数的地址我们是无法知道的。
+ 所以要先把匿名函数定义时的地址赋值给一个变量temp
+	var tempFn = function () {
+		eventFn.call('curEle');
+	};
+2、为什么要把tempFn设置成一个全局变量
+	若tempFn不是一个全局变量，而是写在函数内部的私有变量，而私有变量只能在函数内部进行访问，所以我们在bind()函数里的tempFn在unbind()函数里是不能访问的，因此也就不能移除该事件函数。所以若想移除该事件函数，tempFn就必须是全局变量
+
+3、call() aplly() bind() 的区别
+	//div.attachEvent('onclick',fn1.call(div));绑定的时候就把方法fn1给执行了，把其返回值undefined给我们的onclick行为
+	//div.attachEvent('onclick',fn1.call(div));在Function类的原型链上除了call和apply可以改变this指向，bind方法也可以改变this指向，与前两者不同的是，使用bind方法只是改变this指向，而不执行fn1方法。但是bind方法在IE上不兼容，所以不考虑
+
+拓展：我们知道：写在函数内部的变量是私有变量，一个函数的私有变量只能在函数的内部进行访问。
+	(1)若在一个函数里要用到另一个函数里的变量，可以把该变量设置成全局的变量，这样两个函数都可以访问到。
+	(2)若几个函数的作用是为同一个/同一类元素提供方法去使用，且不同方法中要用到其它方法里的变量等，那么可以用该元素的自定义变量来存储这些变量，就可以实现在不同方法中的访问。
+	
+ 
+4、另一种实现方法
+	function bind(curEle,eventType,eventFn){
+		if ("addEventListener" in document) {
+			curEle.addEventListener(eventType,eventFn,false);
+			return ;
+		}
+		var tempFn = function () {
+			eventFn.call('curEle');
+		};//为了让eventFn.call('curEle')能在事件发生时执行(而不是在js加载时就执行)，我们把其封装在一个匿名函数里，为了后续解除事件时可以找到该事件，故把函数的地址赋值给tempFn
+		tempFn.photo = eventFn;//给传入的每一个函数做一个唯一标识
+		//首先判断该自定义属性之前是否存在，不存在的话创建一个，由于要存储多个方法，所以我们让其值是一个数组
+		//为什么要对不同的事件类型创建不同的数组呢，因为不同的事件可能执行相同的方法。如mouseover 和 click 都执行fn1方法时，移除的时候就可能出错
+		if (!curEle['bindFn' + eventType]) {
+			curEle['bindFn' + eventType] = [];
+		}
+		curEle['bindFn'].push = tempFn;
+		curEle.attachEvent("on" + eventType,tempFn);
+	}
+ 
+	function unbind(curEle,eventType,eventFn) {
+		if ("removeEventListener" in document) {
+			curEle.removeEventListener(eventType,eventFn,false);
+			return ;
+		}
+		var arr = curEle['bindFn' + eventType];
+		for (var i = 0; i < arr.length; i ++) {
+			if (arr[i].photo === eventFn) {
+				arr.splice(i,1);//找到后，把自己存储容器中对应的移除掉，与事件池中保持一致
+				curEle.detachEvent("on" + eventType,arr[i]);//把事件池中对应的方法移除掉
+				break;
+			}
+		}
+	}
+ 
+ 
+ =============================课时119 dom2兼容处理重复问题===============================
+ function bind(curEle,eventType,eventFn){
+		if ("addEventListener" in document) {
+			curEle.addEventListener(eventType,eventFn,false);
+			return ;
+		}
+		//为了让eventFn.call('curEle')能在事件发生时执行(而不是在js加载时就执行)，我们把其封装在一个匿名函数里，为了后续解除事件时可以找到该事件，故把函数的地址赋值给tempFn
+		var tempFn = function () {
+			eventFn.call('curEle');
+		};
+		tempFn.photo = eventFn;//给传入的每一个函数做一个唯一标识
+		//首先判断该自定义属性之前是否存在，不存在的话创建一个，由于要存储多个方法，所以我们让其值是一个数组
+		//为什么要对不同的事件类型创建不同的数组呢，因为不同的事件可能执行相同的方法。如mouseover 和 click 都执行fn1方法时，移除的时候就可能出错
+		if (!curEle['bindFn' + eventType]) {
+			curEle['bindFn' + eventType] = [];
+		}
+		//处理重复问题：如果每一次往自定义属性添加方法前，看一下是否已经有了，有的话就不用重复添加，同理，也就不用往事件池里存储了
+		var arr = curEle['bindFn' + eventType];
+		for (var i = 0; i < arr.length ;i ++) {
+			if (arr[i].photo === eventFn) {
+				return ;
+			}
+		}
+		
+		arr.push = tempFn;
+		curEle.attachEvent("on" + eventType,tempFn);
+	}
+ 
+	function unbind(curEle,eventType,eventFn) {
+		if ("removeEventListener" in document) {
+			curEle.removeEventListener(eventType,eventFn,false);
+			return ;
+		}
+		var arr = curEle['bindFn' + eventType];
+		for (var i = 0; i < arr.length; i ++) {
+			if (arr[i].photo === eventFn) {
+				arr.splice(i,1);//找到后，把自己存储容器中对应的移除掉，与事件池中保持一致
+				curEle.detachEvent("on" + eventType,arr[i]);//把事件池中对应的方法移除掉
+				break;
+			}
+		}
+	}
+ 
+ =====================课时120 dom2兼容处理 顺序问题=======================
+ 1、我们知道在IE6-8下，事件的执行顺序是无序的，这是由浏览器的事件池机制所决定的。所以要改善这个问题，我们模仿标准浏览器的事件执行顺序，可以自己写一个事件池来使方法的执行顺序有序执行。
+ 
+ 2、创建自己的事件池，并把需要给当前元素绑定的方法依次增加到事件池中
+	function on(curEle,eventType,eventFn) {
+		if (!curEle['myEvent' + eventType]) {
+			curEle['myEvent' + eventType] = [];
+		}
+		var arr = curEle['myEvent' + eventType];
+		for (var i = 0; i < arr.length; i ++) {
+			if (arr[i] === eventFn) return ;
+		}
+		arr.push(eventFn)
+		bind(curEle,eventType,run);//把run方法绑定到自定义的bind()函数中，这个bind函数解决了this指向和重复问题。因此绑定后run方法的this指向当前点击元素
+	}
+ 
+ 3、在自己的事件池中把某一个方法移除
+	function off(curEle,eventType,eventFn) {
+		var arr = curEle['myEvent' + eventType];
+		for (var i = 0; i < arr.length; i ++) {
+			if (arr[i] === eventFn) {
+				arr.splice(i,1);
+			}
+		}
+	}
+ 
+ 4、由于IE6-8浏览器DOM2级事件执行多个绑定方法时会出现顺序混乱，我们就只给它绑定一个run方法，然后在run方法里执行事件池里绑定的方法。
+	function run(event) {
+		event = event || window.event;
+		var flag = event.target ? true :false ;
+		if (!flag) {
+			event.target = window.srcElement;
+			event.pageX = event.clientX + document.documentElement.scrollLeft;
+			event.pageY = event.clentY +document.documentElement.scrollTop;
+			event.preventDefault = function () {
+				event.returnValue = false ;
+			}
+			event.stopPropagation = function () {
+				event.cancleBubble = true ;
+			}
+		}
+		//获取事件池中绑定的方法，并且让这些方法依次执行
+		var arr = event.target['myevent' + event.type];
+		for (var i = 0; i < arr.length; i ++) {
+			arr[i].call(event.target);
+		}	
+	}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

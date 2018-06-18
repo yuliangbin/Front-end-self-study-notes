@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>补充CSS伪类</title>
+		<style>
+			* {
+				padding:0;
+				margin:0;
+				font-size:20px;
+				font-family:微软雅黑;
+			}
+			.box {
+				width: 300px;
+				border: green dashed 1px;
+				padding: 30px;
+				margin: 20px auto;
+				background:pink;
+			}
+			.box p {
+				line-height:30px;
+			}
+			.box p:before {
+				display:block;
+				text-align:center;
+				margin:5px auto;
+				line-height:30px;
+				background:lightblue;
+				content:"珠峰培训";
+			}
+			
+		</style>
+	</head>
+	<body>	
+		<div class="box">
+			<p>前提：必须保证try中的代码在不兼容的浏览器中执行的时候报错，这样的话我们才可以catch捕获到异常信息，进行处理。
+			不管当前是什么浏览器，都需要先把try中的代码执行一遍，报错，再执行catch里的代码(消耗性能)。如果try里面有100行代码，则更明显</p>
+		</div>
+	</body>
+	<script>
+		function getCss() {
+			var val = null;
+			if (window.getComputedStyle) {//if ('getComputed' in window)
+				val = window.getComputedStyle(cueEle,null)[attr];
+			} else {
+				val = curEle.currentStyle[attr];
+			}
+			return val;
+		}
+		var div = document.getElementById('box');
+		var body = document.getElementsByTagName('body')[0];
+		//console.dir(div);
+		//console.dir(body);
+		var style = window.getComputedStyle(div,null);//返回一个函数，知getComputedStyle是一个方法。
+	</script>
+	
+
+</html>

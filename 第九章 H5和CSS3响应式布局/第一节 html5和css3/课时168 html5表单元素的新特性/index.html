@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JS异步编程思想</title>
+		<style>
+			* {
+				margin:0;
+				padding:0;
+			}
+			html,body {
+				font-size:14px;
+				overflow-x:hidden;
+			}
+			input {
+				outline:none;//输入框默认的边框高亮
+				display:inline-block;
+			}
+			.box {
+				position:relative;
+				width:200px;
+			}
+			.box span {
+				position:absolute;
+				top:0;
+				left:0;
+				display:none;
+				color:gray;
+				cursor:text;
+			}
+			#userEmailTwo:valid {
+				border:1px green solid;
+			}//邮箱验证成功后显示绿色
+			#userEmailTwo:invalid {
+				border:1px red solid;
+			}//邮箱验证不成功，显示红色
+		</style>
+	</head>
+	<body>		
+		<div class="box">
+			<input  type="text" id="user" placeholder="请输入你的邮箱"/>
+			<span>请输入你的邮箱</span>
+		</div>
+		<br/><br/>
+		<input type="text" id="userEmailFir" /><br/><br/>
+		<input type="email" id="userEmailTwo" />
+	</body>
+	<script type="text/javascript">
+		if (navigator.userAgent.indexOf("MSIE") > -1) {
+			var box = document.getElementsByClassName("box")[0],
+			input = document.getElementById("user"),
+			span = document.getElementsByTagName("span")[0];
+			input.placeholder = "";
+			span.onfocus = function () {
+				input.focus();//获取光标，onfocus为获取光标事件
+			}
+			input.onblur = input.onfocus = input.onkeyup = input.onkeydown = function () {
+				span.style.display = this.value.length == 0 ? "block" : "none";
+			}
+		}
+		
+		
+	/*
+		var userEmailTwo = document.getElementById("userEmailTwo"),
+			userEmailFir = document.getElementById("userEmailFir");
+		userEmailFir.onblur = function () {
+			var val = this.value.replace(/^ +| +$/g,"");
+			var reg = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+			if (!reg.test(val)) {
+				console.log('邮箱的格式不正确');
+			}	
+		}
+		
+		//光标移除时触发的事件
+		userEmailTwo.onblur = function () {
+			var val = this.value.replace(/^ +| +$/g,"");
+			if (!this.checkValidity()) {
+				console.log("邮箱格式不正确");
+			}
+		}
+		//若需要在每打一个字母就检查一遍，可以使用onkeyup事件
+		userEmailTwo.onkeyup = function () {
+			var val = this.value.replace(/^ +| +$/g,"");
+			var reg = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+			if (!reg.test(val)) {
+				this.style.border = "1px red solid";
+			} else {
+				this.style.border = "1px green solid";
+			}
+		}
+		*/
+	</script>
+	
+
+</html>
